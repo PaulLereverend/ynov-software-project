@@ -11,6 +11,13 @@
 	    <type>pom</type>
 	  </dependency>
 	  <dependency>
+        <groupId>com.oracle</groupId>
+        <artifactId>javafx</artifactId>
+        <version>latest</version>
+        <systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
+        <scope>system</scope>
+	</dependency>
+	  <dependency>
 	    <groupId>org.hibernate</groupId>
 	    <artifactId>hibernate-core</artifactId>
 	    <version>5.2.12.Final</version>
