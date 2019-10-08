@@ -6,10 +6,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import javafx.application.Application;
 
 import static javafx.application.Application.launch;
 
-public class start {
+public class start extends Application{
 
 		
 	private int NB_CASE = 20;
