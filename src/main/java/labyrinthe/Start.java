@@ -21,7 +21,7 @@ public class Start extends Application{
 
 	public void start(Stage stage) throws Exception{
 		
-		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+		/*Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 		SessionFactory sf = cfg.buildSessionFactory();
 		
 		Obstacle obstacle = new Obstacle(0,0,"test", "rouge", 1,1);
@@ -29,7 +29,7 @@ public class Start extends Application{
 		session.beginTransaction();
 		session.save(obstacle);
 		session.getTransaction().commit();
-		session.close();
+		session.close();*/
 		//Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
 		GridPane gridPane = new GridPane();
