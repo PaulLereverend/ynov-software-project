@@ -1,16 +1,15 @@
 package labyrinthe;
 
+import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
-import javafx.application.Application;
 
-import static javafx.application.Application.launch;
-
-public class start extends Application{
+public class Start extends Application{
 
 		
 	private int NB_CASE = 20;
@@ -19,8 +18,10 @@ public class start extends Application{
 		//Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
 		GridPane gridPane = new GridPane();
-
+		
+		//gridPane.setMinSize(400, 200);
 		gridPane.setPadding(new Insets(20));
+		gridPane.setAlignment(Pos.CENTER);
 
 		for (int i = 0; i < NB_CASE; i++) {
 			RowConstraints row = new RowConstraints(30);
@@ -32,24 +33,6 @@ public class start extends Application{
 			ColumnConstraints col = new ColumnConstraints(30);
 			gridPane.getColumnConstraints().add(col);
 		}
-
-
-		//gridPane.getRowConstraints().add(new RowConstraints(30, 30, 30));
-
-        /*for (int row = 0; row < 10; row++)
-        {
-            gridPane.getRowConstraints().add(new RowConstraints(30, 30, 30));
-
-            Text textTest = new Text("row "+row+" ");
-            gridPane.addRow(row, textTest);
-
-            for (int column = 0; column < 10; column++)
-            {
-                //gridPane.getColumnConstraints().add(new ColumnConstraints(30, 30, 30));
-                Text textTest2 = new Text("col "+column+" ");
-                gridPane.addColumn(column, textTest2);
-            }
-        }*/
 
 		gridPane.setGridLinesVisible(true);
 
