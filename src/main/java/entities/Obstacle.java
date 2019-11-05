@@ -35,10 +35,9 @@ public class Obstacle {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Obstacle(int id, int traversable, int effet, String nom, String apparence, int nbMaxParNiveau,
+	public Obstacle(int traversable, int effet, String nom, String apparence, int nbMaxParNiveau,
 			int nbMinParNiveau) {
 		super();
-		this.id = id;
 		this.traversable = traversable;
 		this.effet = effet;
 		this.nom = nom;

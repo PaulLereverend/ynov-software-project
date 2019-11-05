@@ -8,6 +8,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import entities.Obstacle;
 
 public class Start extends Application{
 
@@ -15,6 +20,16 @@ public class Start extends Application{
 	private int NB_CASE = 20;
 
 	public void start(Stage stage) throws Exception{
+		
+		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+		SessionFactory sf = cfg.buildSessionFactory();
+		
+		Obstacle obstacle = new Obstacle(0,0,"test", "rouge", 1,1);
+		Session session = sf.openSession();
+		session.beginTransaction();
+		session.save(obstacle);
+		session.getTransaction().commit();
+		session.close();
 		//Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
 		GridPane gridPane = new GridPane();
@@ -45,6 +60,7 @@ public class Start extends Application{
 
 
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
 
