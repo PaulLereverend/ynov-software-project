@@ -14,12 +14,11 @@ public class Start extends Application{
 		
 	private int NB_CASE = 20;
 
-	public void start(Stage primaryStage) throws Exception{
+	public void start(Stage stage) throws Exception{
 		//Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
 		GridPane gridPane = new GridPane();
 		
-		//gridPane.setMinSize(400, 200);
 		gridPane.setPadding(new Insets(20));
 		gridPane.setAlignment(Pos.CENTER);
 
@@ -35,10 +34,13 @@ public class Start extends Application{
 		}
 
 		gridPane.setGridLinesVisible(true);
+		
+		Scene scene = new Scene(gridPane);
 
-		primaryStage.setTitle("Hello World");
-		primaryStage.setScene(new Scene(gridPane, 300, 275));
-		primaryStage.show();
+		stage.setTitle("Hello World");
+		stage.setScene(scene);
+		stage.sizeToScene();
+		stage.show();
 	}
 
 
