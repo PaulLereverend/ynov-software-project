@@ -1,7 +1,7 @@
 package controller;
 
 public class pathfinding implements IA {
-	public void AStar() {
+	/*public void AStar() {
 		ArrayList<Node> priority = new ArrayList<Node>();
 		priority.add(map[startx][starty]);
 		while(solving) {
@@ -21,5 +21,5 @@ public class pathfinding implements IA {
 			}
 			sortQue(priority);	//SORT THE PRIORITY QUE
 		}
-	}
+	}*/
 }
