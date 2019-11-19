@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,18 +19,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.function.Consumer;
-
-import javax.imageio.ImageIO;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
+import javafx.stage.StageStyle;
 import entities.Obstacle;
 
 public class Start extends Application{
@@ -39,6 +27,8 @@ public class Start extends Application{
 	//final Text point_depart = new Text(50, 100, "DRAG ME");
 	final Text target = new Text(200, 100, "DROP HERE");
 	private int NB_CASE = 20;
+	static String PNG_START = "png;base64,";
+	static String JPG_START = "jpg;base64,";
 
 	public void start(Stage primaryStage) throws Exception{
 		
@@ -65,11 +55,13 @@ public class Start extends Application{
 		point_arrivee.setFitHeight(30);
 		gridPane.add(point_arrivee, 10, 10);
 		  
+		//lignes
 		for (int i = 0; i < NB_CASE; i++) { 
 			RowConstraints row = new RowConstraints(30);
 			gridPane.getRowConstraints().add(row);
 		}
-		  
+		
+		//colonnes
 		for (int j = 0; j < NB_CASE; j++) { 
 			ColumnConstraints col = new ColumnConstraints(30); 
 			gridPane.getColumnConstraints().add(col); 
@@ -77,7 +69,7 @@ public class Start extends Application{
 		
 		for (int i = 0 ; i < NB_CASE ; i++) {
             for (int j = 0; j < NB_CASE; j++) {
-                addPane(i, j, gridPane);
+            	initCase(i, j, gridPane);
             }
         }
 		  
@@ -94,24 +86,59 @@ public class Start extends Application{
 		launch(args);
 	}
 	
-	private void addPane(final int colIndex, final int rowIndex,GridPane gridPane) {
+	private void initCase(final int colIndex, final int rowIndex,GridPane gridPane) {
 		
         if (colIndex == 5 && rowIndex == 10) {
-        	Image point_depart_img = new Image("file:src/main/resources/cross.png");
+    	    ImageView img = new ImageView();
+    	    img.setImage(new Image(getClass().getResource("src/main/resources/cross.png").toExternalForm()));
+    	    
+        	final Image point_depart_img = new Image("file:src/main/resources/cross.png");
         	final ImageView pane_img = new ImageView(point_depart_img);
         	pane_img.setFitWidth(30);
         	pane_img.setFitHeight(30);
-    		
+        	
+            
         	pane_img.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
                 public void handle(MouseEvent t) {
-                	pane_img.setStyle("-fx-background-color:#dae7f3;z-index : -1000;");
+                	pane_img.setStyle("-fx-background-color:#dae7f3;");
+                    
                 }
             });
 
         	pane_img.setOnMouseExited(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent t) {
-                	pane_img.setStyle("-fx-background-color:transparent;z-index : -1000;");
+                	pane_img.setStyle("-fx-background-color:transparent;");
+                }
+            });
+        	
+        	pane_img.setOnDragDetected(new EventHandler <MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    /* drag was detected, start drag-and-drop gesture*/
+                    System.out.println("onDragDetected");
+                    
+                    /* allow any transfer mode */
+                    Dragboard db = pane_img.startDragAndDrop(TransferMode.ANY);
+                    
+                    /* put a string on dragboard */
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString("cross");
+                    db.setContent(content);
+                    
+                    event.consume();
+                }
+            });
+        	
+        	pane_img.setOnDragDone(new EventHandler <DragEvent>() {
+                public void handle(DragEvent event) {
+                    /* the drag-and-drop gesture ended */
+                    System.out.println("onDragDone");
+                    /* if the data was successfully moved, clear it */
+                    if (event.getTransferMode() == TransferMode.MOVE) {
+//                    	pane_img.setText("");
+                    }
+                    
+                    event.consume();
                 }
             });
         	
