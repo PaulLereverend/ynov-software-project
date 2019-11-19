@@ -8,7 +8,7 @@ import view.Interface;
 public class Start extends Application{
 
 	public void start(Stage primaryStage) throws Exception{
-			
+		
 		/*Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 		SessionFactory sf = cfg.buildSessionFactory();
 		
@@ -17,7 +17,20 @@ public class Start extends Application{
 		session.beginTransaction();
 		session.save(obstacle);
 		session.getTransaction().commit();
-		session.close();*/
+		
+		session.close();
+		InputStream inputStream = this.getClass()
+		  .getClassLoader()
+		  .getResourceAsStream("profile.png");
+		 
+		if(inputStream == null) {
+		    fail("Unable to get resources");
+		}
+		user.setPhoto(IOUtils.toByteArray(inputStream));
+
+		*
+		*
+		*/
 		//Parent root = FXMLLoader.load(getClass().getRepoint_depart("sample.fxml"));
 		
 		//Interface interfaceJeu = new Interface(primaryStage);

@@ -22,8 +22,8 @@ public class Obstacle {
 	@Column(name = "nom")
 	private String nom;
 	
-	@Column(name = "apparence")
-	private String apparence;	
+	@Column(name = "apparence", columnDefinition="BLOB")
+	private byte[] apparence;	
 	
 	@Column(name = "nbMaxParNiveau")
 	private int nbMaxParNiveau;

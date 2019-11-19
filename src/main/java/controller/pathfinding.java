@@ -1,7 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+
+import javafx.scene.Node;
+
 public class pathfinding implements IA {
-	/*public void AStar() {
+	public void AStar() {
 		ArrayList<Node> priority = new ArrayList<Node>();
 		priority.add(map[startx][starty]);
 		while(solving) {
@@ -19,7 +23,7 @@ public class pathfinding implements IA {
 			} else {
 				priority.remove(0);
 			}
-			sortQue(priority);	//SORT THE PRIORITY QUE
+			sortQue(priority);
 		}
-	}*/
+	}
 }
