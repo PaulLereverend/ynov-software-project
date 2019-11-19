@@ -51,5 +51,4 @@ public class Plateau {
 	public int getNbCases() {
 		return NB_CASE;
 	}
-
 }
