@@ -1,12 +1,8 @@
 package labyrinthe;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.Plateau;
+import view.Interface;
 
 public class Start extends Application{
 
@@ -22,19 +18,8 @@ public class Start extends Application{
 		session.getTransaction().commit();
 		session.close();*/
 		//Parent root = FXMLLoader.load(getClass().getRepoint_depart("sample.fxml"));
-
-		GridPane gridPane = new GridPane();
-		  
-		gridPane.setPadding(new Insets(20,20,20,20));
-		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setGridLinesVisible(true);
-		Plateau plateau = new Plateau(gridPane);
-		Scene scene = new Scene(gridPane);
-
-		primaryStage.setTitle("Hello World");
-		primaryStage.sizeToScene();
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		
+		Interface interfaceJeu = new Interface(primaryStage);
 	}
 	
 	public static void main(String[] args) {	
