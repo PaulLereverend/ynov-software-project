@@ -161,6 +161,6 @@ public class Start extends Application{
             });
 			
 			gridPane.add(pane, colIndex, rowIndex);
-		}
+		} 
     }
 }
