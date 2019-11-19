@@ -1,6 +1,11 @@
 package view;
 
+import java.util.ArrayList;
+
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,29 +14,80 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import model.Plateau;
 
 public class Interface {
 	
+	private GridPane gridPane = new GridPane();
+	
 	private Plateau plateau = new Plateau();
 	
 	public Interface(Stage primaryStage) {
 		super();
+		
+		gridPane.setPadding(new Insets(20,20,20,20));
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setGridLinesVisible(true);
+		
+		//lignes
+		for (int i = 0; i < plateau.getNbCases(); i++) { 
+			RowConstraints row = new RowConstraints(30);
+			gridPane.getRowConstraints().add(row);
+		}
+		
+		//colonnes
+		for (int j = 0; j < plateau.getNbCases(); j++) { 
+			ColumnConstraints col = new ColumnConstraints(30); 
+			gridPane.getColumnConstraints().add(col); 
+		}
+		
 		for (int i = 0 ; i < plateau.getNbCases() ; i++) {
 	        for (int j = 0; j < plateau.getNbCases(); j++) {
 	        	initCase(i, j);
 	        }
 	    }
 		
-		Scene scene = new Scene(plateau.getGridPane());
+		Scene scene = new Scene(gridPane);
 
 		primaryStage.setTitle("Hello World");
 		primaryStage.sizeToScene();
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+	}
+	
+	public Node getPane(int row, int col) {
+		for(Node node : gridPane.getChildren()){
+	        if (GridPane.getRowIndex(node) == null) {
+	        	continue ; //ignore Group 
+	        }
+	        if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+	        	return node;
+	        }
+	    }
+	    return null;
+	}
+	
+	public ArrayList<Node> getNeighbour(int row, int col) {
+		ArrayList<Node> listVoisins = null;
+		for(Node node : gridPane.getChildren()){
+	        if (GridPane.getRowIndex(node) == null) {
+	        	continue ; //ignore Group 
+	        }
+	        if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+	        	listVoisins.add(node);
+	        }
+	    }
+	    return listVoisins;
+	}
+
+	public GridPane getGridPane() {
+		return gridPane;
 	}
 	
 	private void initCase(final int colIndex, final int rowIndex) {
@@ -119,7 +175,16 @@ public class Interface {
             }
         });
     	
-    	plateau.getGridPane().add(pane, colIndex, rowIndex);
+    	gridPane.add(pane, colIndex, rowIndex);
     }
+	
+	public Node getCaseDepart() {
+		return null;
+	}
+	
+	public Node getCaseArrivee() {
+		return null;
+	}
+
 
 }

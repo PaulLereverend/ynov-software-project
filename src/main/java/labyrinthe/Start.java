@@ -2,6 +2,7 @@ package labyrinthe;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Plateau;
 import view.Interface;
 
 public class Start extends Application{
@@ -19,7 +20,10 @@ public class Start extends Application{
 		session.close();*/
 		//Parent root = FXMLLoader.load(getClass().getRepoint_depart("sample.fxml"));
 		
-		Interface interfaceJeu = new Interface(primaryStage);
+		//Interface interfaceJeu = new Interface(primaryStage);
+		
+		Plateau plateau = new Plateau();
+		System.out.println(plateau.getCasesArround(10, 10).toString());
 	}
 	
 	public static void main(String[] args) {	
