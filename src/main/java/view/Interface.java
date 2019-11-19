@@ -25,8 +25,6 @@ public class Interface {
 	        }
 	    }
 		
-		System.out.println(plateau.getPane(10, 10));
-		
 		Scene scene = new Scene(plateau.getGridPane());
 
 		primaryStage.setTitle("Hello World");

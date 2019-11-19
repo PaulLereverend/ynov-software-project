@@ -33,9 +33,12 @@ public class Plateau {
 	}
 	
 	public Node getPane(int row, int col) {
-		for (Node node : gridPane.getChildren()) {
-	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-	            return node;
+		for(Node node : gridPane.getChildren()){
+	        if (GridPane.getRowIndex(node) == null) {
+	        	continue ; //ignore Group 
+	        }
+	        if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+	        	return node;
 	        }
 	    }
 	    return null;
