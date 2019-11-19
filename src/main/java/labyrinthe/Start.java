@@ -1,9 +1,11 @@
 package labyrinthe;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +22,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.util.ArrayList;
+
 import entities.Obstacle;
 
 public class Start extends Application{
@@ -31,7 +36,7 @@ public class Start extends Application{
 	static String JPG_START = "jpg;base64,";
 
 	public void start(Stage primaryStage) throws Exception{
-		
+			
 		/*Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 		SessionFactory sf = cfg.buildSessionFactory();
 		
@@ -88,31 +93,33 @@ public class Start extends Application{
 	
 	private void initCase(final int colIndex, final int rowIndex,GridPane gridPane) {
 		
+		final Pane pane = new Pane();
+
         if (colIndex == 5 && rowIndex == 10) {
-    	    ImageView img = new ImageView();
-    	    img.setImage(new Image(getClass().getResource("src/main/resources/cross.png").toExternalForm()));
-    	    
+    	    //ImageView img = new ImageView();
+    	    //img.setImage(new Image(getClass().getResource("src/main/resources/cross.png").toExternalForm()));
+
         	final Image point_depart_img = new Image("file:src/main/resources/cross.png");
         	final ImageView pane_img = new ImageView(point_depart_img);
         	pane_img.setFitWidth(30);
         	pane_img.setFitHeight(30);
         	
             
-        	pane_img.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        	pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
                 public void handle(MouseEvent t) {
-                	pane_img.setStyle("-fx-background-color:#dae7f3;");
+                	pane.setStyle("-fx-background-color:#dae7f3;");
                     
                 }
             });
 
-        	pane_img.setOnMouseExited(new EventHandler<MouseEvent>() {
+        	pane.setOnMouseExited(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent t) {
-                	pane_img.setStyle("-fx-background-color:transparent;");
+                	pane.setStyle("-fx-background-color:transparent;");
                 }
             });
         	
-        	pane_img.setOnDragDetected(new EventHandler <MouseEvent>() {
+        	pane.setOnDragDetected(new EventHandler <MouseEvent>() {
                 public void handle(MouseEvent event) {
                     /* drag was detected, start drag-and-drop gesture*/
                     System.out.println("onDragDetected");
@@ -141,11 +148,13 @@ public class Start extends Application{
                     event.consume();
                 }
             });
+        	pane.getChildren().add(pane_img);
         	
-        	gridPane.add(pane_img, colIndex, rowIndex);
+        	gridPane.add(pane, colIndex, rowIndex);
+        	
+        
             
 		} else {
-			final Pane pane = new Pane();
 			
 			pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
