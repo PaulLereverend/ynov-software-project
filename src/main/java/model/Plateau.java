@@ -1,5 +1,6 @@
 package model;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -32,15 +33,12 @@ public class Plateau {
 	}
 	
 	public Node getPane(int row, int col) {
-		System.out.println(row);
-		System.out.println(col);
-		for (javafx.scene.Node node : gridPane.getChildren()) {
-			System.out.println(node);
-	        /*if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+		for (Node node : gridPane.getChildren()) {
+	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
 	            return node;
-	        }*/
+	        }
 	    }
-		return null;
+	    return null;
 	}
 
 	public GridPane getGridPane() {

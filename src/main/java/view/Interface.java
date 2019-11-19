@@ -19,12 +19,13 @@ public class Interface {
 	
 	public Interface(Stage primaryStage) {
 		super();
-		System.out.println(plateau.getPane(10, 10));
 		for (int i = 0 ; i < plateau.getNbCases() ; i++) {
 	        for (int j = 0; j < plateau.getNbCases(); j++) {
 	        	initCase(i, j);
 	        }
 	    }
+		
+		System.out.println(plateau.getPane(10, 10));
 		
 		Scene scene = new Scene(plateau.getGridPane());
 
