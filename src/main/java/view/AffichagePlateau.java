@@ -1,11 +1,8 @@
 package view;
 
-import java.util.ArrayList;
-
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,15 +16,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import model.Case;
 import model.Plateau;
 
-public class Interface {
+public class AffichagePlateau {
 	
 	private GridPane gridPane = new GridPane();
 	
 	public static Plateau plateau = new Plateau();
-	
-	public Interface(Stage primaryStage) {
+	//TODO set case bleu, blanc (pour passage du bot)
+	public AffichagePlateau(Stage primaryStage) {
 		super();
 		
 		gridPane.setPadding(new Insets(20,20,20,20));
@@ -46,51 +44,29 @@ public class Interface {
 			gridPane.getColumnConstraints().add(col); 
 		}
 		
-		for (int i = 0 ; i < plateau.getNbCases() ; i++) {
-	        for (int j = 0; j < plateau.getNbCases(); j++) {
-	        	initCase(i, j);
-	        }
-	    }
+		for (Case[] cases : plateau.casesTab) {
+			for (Case c : cases) {
+				initCase(c);
+			}
+		}
 		
 		Scene scene = new Scene(gridPane);
 
-		primaryStage.setTitle("Hello World");
+		primaryStage.setTitle("Labyrinthe");
 		primaryStage.sizeToScene();
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-	}
-	
-	public Node getPane(int row, int col) {
-		for(Node node : gridPane.getChildren()){
-	        if (GridPane.getRowIndex(node) == null) {
-	        	continue ; //ignore Group 
-	        }
-	        if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-	        	return node;
-	        }
-	    }
-	    return null;
-	}
-	
-	public ArrayList<Node> getNeighbour(int row, int col) {
-		ArrayList<Node> listVoisins = null;
-		for(Node node : gridPane.getChildren()){
-	        if (GridPane.getRowIndex(node) == null) {
-	        	continue ; //ignore Group 
-	        }
-	        if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-	        	listVoisins.add(node);
-	        }
-	    }
-	    return listVoisins;
 	}
 
 	public GridPane getGridPane() {
 		return gridPane;
 	}
 	
-	private void initCase(final int colIndex, final int rowIndex) {
+	private void initCase(Case c) {
+		
+		final int colIndex = c.getColonne();
+		final int rowIndex = c.getLigne();
 		
 		final Pane pane = new Pane();
 
@@ -177,14 +153,6 @@ public class Interface {
     	
     	gridPane.add(pane, colIndex, rowIndex);
     }
-	
-	public Node getCaseDepart() {
-		return null;
-	}
-	
-	public Node getCaseArrivee() {
-		return null;
-	}
 
 
 }

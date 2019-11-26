@@ -3,7 +3,8 @@ package labyrinthe;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Plateau;
-import view.Interface;
+import view.AffichagePlateau;
+import view.Menu;
 
 public class Start extends Application{
 
@@ -33,7 +34,8 @@ public class Start extends Application{
 		*/
 		//Parent root = FXMLLoader.load(getClass().getRepoint_depart("sample.fxml"));
 		
-		Interface interfaceJeu = new Interface(primaryStage);
+		//AffichagePlateau interfaceJeu = new AffichagePlateau(primaryStage);
+		Menu menuJeu = new Menu(primaryStage);
 		
 		Plateau plateau = new Plateau();
 	}

@@ -30,37 +30,37 @@ public class Plateau {
 		ArrayList<Case> listVoisins = new ArrayList<Case>(); 
 		if(row+1 < casesTab.length) {
 			listVoisins.add(casesTab[row+1][col]);
-			System.out.println((row+1) + " " + col);
+			//System.out.println((row+1) + " " + col);
 			if (col+1 < casesTab.length) {
 				listVoisins.add(casesTab[row+1][col+1]);
-				System.out.println((row+1) + " " + (col+1));
+				//System.out.println((row+1) + " " + (col+1));
 			}
 			if (col-1 >= 0) {
 				listVoisins.add(casesTab[row+1][col-1]);
-				System.out.println((row+1) + " " + (col-1));
+				//System.out.println((row+1) + " " + (col-1));
 			}
 		}
 		
 		if(row-1 >= 0) {
 			listVoisins.add(casesTab[row-1][col]);
-			System.out.println((row-1) + " " + (col));
+			//System.out.println((row-1) + " " + (col));
 			if (col+1 < casesTab.length) {
 				listVoisins.add(casesTab[row-1][col+1]);
-				System.out.println((row-1) + " " + (col+1));
+				//System.out.println((row-1) + " " + (col+1));
 			}
 			if (col-1 >= 0) {
 				listVoisins.add(casesTab[row-1][col-1]);
-				System.out.println((row-1) + " " + (col-1));
+				//System.out.println((row-1) + " " + (col-1));
 			}
 		}
 		
 		if (col+1 < casesTab.length) {
 			listVoisins.add(casesTab[row][col+1]);
-			System.out.println((row) + " " + (col+1));
+			//System.out.println((row) + " " + (col+1));
 		}
 		if (col-1 >= 0) {
 			listVoisins.add(casesTab[row][col-1]);
-			System.out.println((row) + " " + (col-1));
+			//System.out.println((row) + " " + (col-1));
 		}
 		
 		return listVoisins;
