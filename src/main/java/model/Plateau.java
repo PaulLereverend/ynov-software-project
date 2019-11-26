@@ -2,10 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
+
 public class Plateau {
 	
-	private static int NB_CASES = 19;
-	public static Case[][] casesTab = new Case[NB_CASES][NB_CASES];
+	private int NB_CASES = 19;
+	public Case[][] casesTab = new Case[NB_CASES][NB_CASES];
 	
 	public Plateau() {
 		for (int i = 0; i < casesTab.length; i++) {
@@ -19,7 +20,7 @@ public class Plateau {
 		return NB_CASES;
 	}
 	
-	public static Case getCase(int row, int col) {
+	public Case getCase(int row, int col) {
 		return casesTab[row][col];
 	}
 	
