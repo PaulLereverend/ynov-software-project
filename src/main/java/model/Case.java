@@ -11,7 +11,7 @@ public class Case {
 	public Case(int row, int col, Obstacle type_obtacle) {
 		this.ligne = row;
 		this.colonne = col;
-		this.obstacle = type_obtacle;
+		this.setObstacle(type_obtacle);
 	}
 
 	public int getLigne() {
@@ -28,6 +28,14 @@ public class Case {
 
 	public void setColonne(int colonne) {
 		this.colonne = colonne;
+	}
+
+	public Obstacle getObstacle() {
+		return obstacle;
+	}
+
+	public void setObstacle(Obstacle obstacle) {
+		this.obstacle = obstacle;
 	}
 
 }

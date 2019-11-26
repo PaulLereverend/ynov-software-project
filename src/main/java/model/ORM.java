@@ -18,12 +18,12 @@ public class ORM {
   public static void lancer() {
     ORM example = new ORM();
     System.out.println("After Sucessfully insertion ");
-	Obstacle obstacle = new Obstacle(0,0,"Mur", "rouge", 1,1);
+//	Obstacle obstacle = new Obstacle(0,0,"Mur", "rouge", 1,1);
 	
 	
     //Obstacle student2 = example.Obstacle("Anoop");
-	example.saveObstacle(obstacle);
-    example.listObstacles();
+//	example.saveObstacle(obstacle);
+//    example.listObstacles();
     System.out.println("After Sucessfully modification ");
     //example.listStudent();
     System.out.println("After Sucessfully deletion ");

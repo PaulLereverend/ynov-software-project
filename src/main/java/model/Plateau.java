@@ -26,7 +26,9 @@ public class Plateau {
 		return casesTab[row][col];
 	}
 	
-	public ArrayList<Case> getCasesArround(int row, int col) {
+	public ArrayList<Case> getCasesArround(Case c) {
+		int row = c.getLigne(); 
+		int col = c.getColonne();
 		ArrayList<Case> listVoisins = new ArrayList<Case>(); 
 		if(row+1 < casesTab.length) {
 			listVoisins.add(casesTab[row+1][col]);
@@ -41,7 +43,7 @@ public class Plateau {
 			}
 		}
 		
-		if(row-1 >= 0) {//todo erreur ici
+		if(row-1 >= 0) {
 			listVoisins.add(casesTab[row-1][col]);
 			System.out.println((row-1) + " " + (col));
 			if (col+1 < casesTab.length) {
@@ -67,7 +69,12 @@ public class Plateau {
 	}
 	
 	public Case getCaseDepart() {
-		return null;
+//		for (Case[] cases : casesTab) {
+//			if (cases.getO) {
+//				
+//			}
+//		}
+		return null
 	}
 	
 	public Case getCaseArrivee() {
