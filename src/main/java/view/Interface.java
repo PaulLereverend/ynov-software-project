@@ -25,7 +25,7 @@ public class Interface {
 	
 	private GridPane gridPane = new GridPane();
 	
-	private static Plateau plateau = new Plateau();
+	public static Plateau plateau = new Plateau();
 	
 	public Interface(Stage primaryStage) {
 		super();
