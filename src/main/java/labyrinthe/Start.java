@@ -33,10 +33,9 @@ public class Start extends Application{
 		*/
 		//Parent root = FXMLLoader.load(getClass().getRepoint_depart("sample.fxml"));
 		
-		//Interface interfaceJeu = new Interface(primaryStage);
+		Interface interfaceJeu = new Interface(primaryStage);
 		
 		Plateau plateau = new Plateau();
-		System.out.println(plateau.getCasesArround(10, 10).toString());
 	}
 	
 	public static void main(String[] args) {	

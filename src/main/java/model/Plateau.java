@@ -2,13 +2,10 @@ package model;
 
 import java.util.ArrayList;
 
-import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-
 public class Plateau {
 	
-	private int NB_CASES = 19;
-	private Case[][] casesTab = new Case[NB_CASES][NB_CASES];
+	private static int NB_CASES = 19;
+	public static Case[][] casesTab = new Case[NB_CASES][NB_CASES];
 	
 	public Plateau() {
 		for (int i = 0; i < casesTab.length; i++) {
@@ -22,7 +19,7 @@ public class Plateau {
 		return NB_CASES;
 	}
 	
-	public Case getCase(int row, int col) {
+	public static Case getCase(int row, int col) {
 		return casesTab[row][col];
 	}
 	
@@ -69,15 +66,21 @@ public class Plateau {
 	}
 	
 	public Case getCaseDepart() {
-//		for (Case[] cases : casesTab) {
-//			if (cases.getO) {
-//				
-//			}
-//		}
-		return null
+		return getCaseObstacle("depart");
 	}
 	
 	public Case getCaseArrivee() {
+		return getCaseObstacle("arrivee");
+	}
+	
+	public Case getCaseObstacle(String type) {
+		for (Case[] cases : casesTab) {
+			for (Case c : cases) {
+				if (c.getObstacle().getNom() == type) {
+					return c;
+				}
+			}
+		}
 		return null;
 	}
 }
