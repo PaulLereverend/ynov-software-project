@@ -30,7 +30,7 @@ public class Obstacle {
 	
 	private Obstacles type;
 
-	public Obstacle(int traversable, Effets effet, String nom, byte[] apparence, int nbMaxParNiveau, int nbMinParNiveau, Obstacles type) {
+	public Obstacle(Effets effet, String nom, byte[] apparence, int nbMaxParNiveau, int nbMinParNiveau, Obstacles type) {
 		super();
 		this.effet = effet;
 		this.nom = nom;

@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import entities.Effets;
+import entities.Obstacle;
+import entities.Obstacles;
 
 
 public class Plateau {
@@ -64,6 +67,23 @@ public class Plateau {
 		}
 		
 		return listVoisins;
+	}
+	
+	public void setCaseDepart(int row, int col) {
+		getCase(row, col).setObstacle(new Obstacle(Effets.PASSANT, "depart", null, 1, 1, Obstacles.DEPART));
+		getCase(row, col).setDistance(0);
+	}
+	
+	public void setCaseArrivee(int row, int col) {
+		getCase(row, col).setObstacle(new Obstacle(Effets.PASSANT, "arrivee", null, 1, 1, Obstacles.ARRIVEE));
+	}
+	
+	public void setCaseBoue(int row, int col) {
+		getCase(row, col).setObstacle(new Obstacle(Effets.RALENTIS, "boue", null, 1, 1, Obstacles.BOUE));
+	}
+	
+	public void setCaseMur(int row, int col) {
+		getCase(row, col).setObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 1, 1, Obstacles.MUR));
 	}
 	
 	public Case getCaseDepart() {

@@ -8,40 +8,39 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
-public class Menu {
-	
+public class ChoisirNiveau {
+		
 	private GridPane gridPane = new GridPane();
 
-	public Menu(Stage primaryStage) {
+	public ChoisirNiveau(Stage primaryStage, boolean isDisplay) {
 		super();
 		
 		gridPane.setPadding(new Insets(100,100,100,100));
 		gridPane.setAlignment(Pos.CENTER);
 		gridPane.setVgap(30);
 		
-		for (int i = 0; i < 3; i++) { 
+		int i;
+		for (i = 0; i < 3; i++) { 
 			RowConstraints row = new RowConstraints(30);
 			gridPane.getRowConstraints().add(row);
-			Button bouton = new Button();
-			bouton.setMinWidth(150);
-        	if (i == 0) {
-        		bouton.setText("Jouer");
-        		bouton.setOnMouseClicked((event)->{
-        			new ChoisirNiveau(primaryStage, true);
-        		});
-			}else if(i == 1) {
-				bouton.setText("Modifier un niveau");
-				bouton.setOnMouseClicked((event)->{
-        			new ChoisirNiveau(primaryStage, false);
-        		});
-			}else {
-				bouton.setText("Créer un niveau");
-				bouton.setOnMouseClicked((event)->{
-        			new AffichagePlateau(primaryStage, false);
-        		});
-			}
-			gridPane.add(bouton, 0, i);
+			Button niveau = new Button();
+			niveau.setMinWidth(150);
+			niveau.setText("Niveau "+i);
+			niveau.setOnMouseClicked((event)->{
+    			new AffichagePlateau(primaryStage, isDisplay);
+    		});
+			gridPane.add(niveau, 0, i);
 		}
+		
+		RowConstraints row = new RowConstraints(30);
+		gridPane.getRowConstraints().add(row);
+		Button retour = new Button();
+		retour.setMinWidth(150);
+		retour.setText("Retour");
+		retour.setOnMouseClicked((event)->{
+			new Menu(primaryStage);
+		});
+		gridPane.add(retour, 0, i+1);
 		
 		Scene scene = new Scene(gridPane);
 
@@ -50,5 +49,6 @@ public class Menu {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
+
 
 }
