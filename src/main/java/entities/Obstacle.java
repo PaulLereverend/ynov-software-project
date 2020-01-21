@@ -13,11 +13,8 @@ public class Obstacle {
 	@Column(name = "ID")
 	private int id;
 	
-	@Column(name = "traversable")
-	private int traversable;
-	
 	@Column(name = "effet")
-	private int effet;
+	private Effets effet;
 	
 	@Column(name = "nom")
 	private String nom;
@@ -37,10 +34,9 @@ public class Obstacle {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Obstacle(int traversable, int effet, String nom, byte[] apparence, int nbMaxParNiveau,
+	public Obstacle(int traversable, Effets effet, String nom, byte[] apparence, int nbMaxParNiveau,
 			int nbMinParNiveau) {
 		super();
-		this.traversable = traversable;
 		this.effet = effet;
 		this.nom = nom;
 		this.apparence = apparence;
@@ -57,19 +53,11 @@ public class Obstacle {
 		this.id = id;
 	}
 
-	public int getTraversable() {
-		return traversable;
-	}
-
-	public void setTraversable(int traversable) {
-		this.traversable = traversable;
-	}
-
-	public int getEffet() {
+	public Effets getEffet() {
 		return effet;
 	}
 
-	public void setEffet(int effet) {
+	public void setEffet(Effets effet) {
 		this.effet = effet;
 	}
 
