@@ -29,10 +29,6 @@ public class Obstacle {
 	private int nbMinParNiveau;
 	
 	private Obstacles type;
-	
-	public Obstacle() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public Obstacle(int traversable, Effets effet, String nom, byte[] apparence, int nbMaxParNiveau,
 			int nbMinParNiveau) {
