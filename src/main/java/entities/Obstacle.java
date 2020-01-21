@@ -31,6 +31,8 @@ public class Obstacle {
 	@Column(name = "nbMinParNiveau")
 	private int nbMinParNiveau;
 	
+	private Obstacles type;
+	
 	public Obstacle() {
 		// TODO Auto-generated constructor stub
 	}
@@ -93,6 +95,22 @@ public class Obstacle {
 
 	public void setNbMinParNiveau(int nbMinParNiveau) {
 		this.nbMinParNiveau = nbMinParNiveau;
+	}
+
+	public byte[] getApparence() {
+		return apparence;
+	}
+
+	public void setApparence(byte[] apparence) {
+		this.apparence = apparence;
+	}
+
+	public Obstacles getType() {
+		return type;
+	}
+
+	public void setType(Obstacles type) {
+		this.type = type;
 	}
 	
 		
