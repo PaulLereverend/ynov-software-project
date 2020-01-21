@@ -30,14 +30,14 @@ public class Obstacle {
 	
 	private Obstacles type;
 
-	public Obstacle(int traversable, Effets effet, String nom, byte[] apparence, int nbMaxParNiveau,
-			int nbMinParNiveau) {
+	public Obstacle(int traversable, Effets effet, String nom, byte[] apparence, int nbMaxParNiveau, int nbMinParNiveau, Obstacles type) {
 		super();
 		this.effet = effet;
 		this.nom = nom;
 		this.apparence = apparence;
 		this.nbMaxParNiveau = nbMaxParNiveau;
 		this.nbMinParNiveau = nbMinParNiveau;
+		this.type = type;
 	}
 
 
@@ -85,19 +85,18 @@ public class Obstacle {
 		return apparence;
 	}
 
+
 	public void setApparence(byte[] apparence) {
 		this.apparence = apparence;
 	}
+
 
 	public Obstacles getType() {
 		return type;
 	}
 
+
 	public void setType(Obstacles type) {
 		this.type = type;
 	}
-	
-		
-	
-	
 }
