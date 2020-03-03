@@ -87,17 +87,17 @@ public class Plateau {
 	}
 	
 	public Case getCaseDepart() {
-		return getCaseObstacle("depart");
+		return getCaseObstacle(Obstacles.DEPART);
 	}
 	
 	public Case getCaseArrivee() {
-		return getCaseObstacle("arrivee");
+		return getCaseObstacle(Obstacles.ARRIVEE);
 	}
 	
-	public Case getCaseObstacle(String type) {
+	public Case getCaseObstacle(Obstacles type) {
 		for (Case[] cases : casesTab) {
 			for (Case c : cases) {
-				if (c.getObstacle().getNom() == type) {
+				if (c.getObstacle() != null && c.getObstacle().getType() == type) {
 					return c;
 				}
 			}

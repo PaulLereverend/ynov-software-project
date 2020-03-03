@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.util.ArrayList;
+
+import entities.Obstacles;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import model.Case;
+import model.ObstacleIcon;
 import model.Plateau;
 
 public class AffichagePlateau {
@@ -29,9 +32,19 @@ public class AffichagePlateau {
 	
 	private GridPane gridPaneObstacle = new GridPane();
 	
-	public static Plateau plateau = new Plateau();
-	//TODO set case bleu, blanc (pour passage du bot)
-	public AffichagePlateau(Stage primaryStage, boolean isDisplay) {
+	private Plateau plateau = new Plateau();
+	
+	//click sur icone
+	private boolean putObstacle = false;
+	//seulement une seule pose (depart/arrivee)
+	private ObstacleIcon obstIconSelected = null;
+	//depart/arrivee déjà posé sur le plateau
+	private boolean startExist = false;
+	private boolean endExist = false;
+	
+	private boolean isClear = false;
+	
+	public AffichagePlateau(Stage primaryStage, boolean hasNotEditPanel) {
 		super();
 		
 		HBox root = new HBox();
@@ -64,16 +77,18 @@ public class AffichagePlateau {
 		/*
 		 * Création du menu des obstacles 
 		 */
-		if (!isDisplay) {
-			ArrayList<String> pathImg = new ArrayList<String>();
-			pathImg.add("file:src/main/resources/croix.png");
-			pathImg.add("file:src/main/resources/drapeau.png");
-			pathImg.add("file:src/main/resources/boue.png");
-			pathImg.add("file:src/main/resources/mur.png");
+		if (!hasNotEditPanel) {
+			ArrayList<ObstacleIcon> pathImg = new ArrayList<>();
+			ObstacleIcon o = new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE);
+			pathImg.add(o);
+			o = new ObstacleIcon(new Image("file:src/main/resources/drapeau.png"), Obstacles.DEPART);
+			pathImg.add(o);
+			o = new ObstacleIcon(new Image("file:src/main/resources/boue.png"), Obstacles.BOUE);
+			pathImg.add(o);
+			o = new ObstacleIcon(new Image("file:src/main/resources/mur.png"), Obstacles.MUR);
+			pathImg.add(o);
 			initIcon(pathImg);
 		}
-		
-		clorierCase(new Case(0,0, null), Color.BLUE);
 		
 		root.getChildren().addAll(gridPane, gridPaneObstacle);
 		
@@ -96,52 +111,13 @@ public class AffichagePlateau {
 		final int rowIndex = c.getLigne();
 		
 		final Pane pane = new Pane();
-		
-		//au survole en mode drag
-		pane.setOnDragEntered(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                pane.setStyle("-fx-background-color:green;");
-                
-                event.consume();
-            }
-        });
-		
-		//quand on ne survole plus la case en mode drag
-        pane.setOnDragExited(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* mouse moved away, remove the graphical cues */
-            	pane.setStyle("-fx-background-color:transparent;");
-                
-                event.consume();
-            }
-        });
-        
-        //autorise le drag and drop
-        pane.setOnDragOver(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                if (db.hasString()) {
-                    event.acceptTransferModes( TransferMode.COPY_OR_MOVE );
-                }
-                event.consume();
-            }
-        });
-        
-        //une fois que le pacquet est drop
-  		pane.setOnDragDropped(new EventHandler <DragEvent>() {
-  			public void handle(DragEvent event) {
-  				System.out.println("setOnDragDropped");
-				System.out.println(GridPane.getRowIndex(pane));
-				System.out.println(GridPane.getColumnIndex(pane));
-				event.consume();
-			}
-  		});
         
         //au survole de la souris on coloris la case
         pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
         	public void handle(MouseEvent t) {
             	pane.setStyle("-fx-background-color:#dae7f3;");
             }
+        	
         });
         
         //quand la case n'est plus survolée, on rend la case transparente
@@ -151,64 +127,112 @@ public class AffichagePlateau {
             }
         });
     	
+    	pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	//System.out.println(GridPane.getRowIndex(pane)+","+GridPane.getColumnIndex(pane));
+            	if( putObstacle && obstIconSelected != null && canDisplayObstacle() && pane.getChildren().size() == 0 )
+            	{
+            		ImageView image_view = new ImageView(obstIconSelected.getImg());
+  			    	image_view.setFitWidth(30);
+  			    	image_view.setFitHeight(30);
+  			    	image_view.setUserData(obstIconSelected.getTypeObstacle());
+  			    	if (obstIconSelected.getTypeObstacle() == Obstacles.ARRIVEE) {
+    					endExist = true;
+    				}else if(obstIconSelected.getTypeObstacle() == Obstacles.DEPART) {
+    					startExist = true;
+    				}
+  			    	pane.getChildren().add(image_view);
+  			    	
+            	}
+            	else if(putObstacle && isClear) 
+            	{
+            		if (pane.getChildren().size() > 0) 
+            		{
+            			if (pane.getChildren().get(0).getUserData() != null) 
+            			{
+		            		if (pane.getChildren().get(0).getUserData().equals(Obstacles.ARRIVEE)) {
+								endExist = false;
+							}else if (pane.getChildren().get(0).getUserData().equals(Obstacles.DEPART)) {
+								startExist = false;
+							}
+            			}
+	            		pane.getChildren().clear();
+            		}
+            	}
+            }
+        });
+    	
+    	pane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	if (putObstacle) {
+					putObstacle = false;
+				}else {
+					putObstacle = true;
+				}
+            }
+        });
+    	
     	gridPane.add(pane, colIndex, rowIndex);
     }
 	
-	public void initIcon(ArrayList<String> pathImg) {
+	boolean canDisplayObstacle() {
+		if (obstIconSelected.getTypeObstacle() != null) {
+			//un seul depart / arrivee ou les autres obstacles
+			if (obstIconSelected.getTypeObstacle() == Obstacles.ARRIVEE && endExist) {
+				return false;
+			}else if(obstIconSelected.getTypeObstacle() == Obstacles.DEPART && startExist) {
+				return false;
+			}else {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void initIcon(ArrayList<ObstacleIcon> obstacleIcon) {
 		int i = 1;
-		for (String path : pathImg) {
-			Pane pane = new Pane();
-			Image image = new Image(path);
-	    	ImageView image_view = new ImageView(image);
-	    	image_view.setFitWidth(30);
-	    	image_view.setFitHeight(30);
-	    	pane.getChildren().add(image_view);
-	    	
-	    	pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+		for (ObstacleIcon obsIcon : obstacleIcon) {
+			Pane pane = createIcon(obsIcon);
+	    	pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	            public void handle(MouseEvent t) {
+	            	obstIconSelected = obsIcon;
+	            	isClear = false;
+	            	putObstacle = false;
 	            	pane.setStyle("-fx-background-color:#dae7f3;");
-	                
 	            }
 	        });
-
-	    	pane.setOnMouseExited(new EventHandler<MouseEvent>() {
-	            public void handle(MouseEvent t) {
-	            	pane.setStyle("-fx-background-color:transparent;");
-	            }
-	        });
-	    	
-	    	//au debut du drag
-        	pane.setOnDragDetected(new EventHandler <MouseEvent>() {
-                public void handle(MouseEvent event) {
-                    System.out.println("onDragDetected");
-                    
-                    Dragboard db = image_view.startDragAndDrop(TransferMode.ANY);
-                    
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("cross");
-                    db.setContent(content);
-                    
-                    event.consume();
-                }
-            });
-        	
-        	//une fois le transfert effectué
-        	pane.setOnDragDone(new EventHandler <DragEvent>() {
-                public void handle(DragEvent event) {
-                    System.out.println("onDragDone");
-                    System.out.println(event.toString());
-                    if (event.getTransferMode() == TransferMode.MOVE) {
-    	            	pane.setStyle("-fx-opacity: 1.0 ;");
-                    }
-                    
-                    event.consume();
-                }
-            });
 	    	
 			gridPaneObstacle.add(pane, 0, i);
 			i = i+2;
 		}
+		Pane pane = createIcon(new ObstacleIcon(new Image("file:src/main/resources/balais.png"), null));
+    	pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	obstIconSelected = null;
+            	isClear = true;
+            	putObstacle = false;
+            	pane.setStyle("-fx-background-color:#dae7f3;");
+            }
+        });
+    	
+		gridPaneObstacle.add(pane, 0, i+2);
 		
+	}
+	
+	private Pane createIcon(ObstacleIcon obsIcon) {
+		Pane pane = new Pane();
+    	ImageView image_view = new ImageView(obsIcon.getImg());
+    	image_view.setFitWidth(30);
+    	image_view.setFitHeight(30);
+    	pane.getChildren().add(image_view);
+    	
+    	pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent t) {
+            	pane.setStyle("-fx-cursor: hand;");
+            }
+        });
+    	
+    	return pane;
 	}
 	
 	public void clorierCase(Case c, Color couleur) {
@@ -219,6 +243,10 @@ public class AffichagePlateau {
 		        }
 			}
 	    }
+	}
+	
+	public Plateau getPlateau() {
+		return plateau;
 	}
 
 
