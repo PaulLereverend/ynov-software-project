@@ -1,7 +1,15 @@
 package labyrinthe;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import entities.Effets;
+import entities.Obstacle;
+import entities.Obstacles;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.ORM;
 import model.Plateau;
 import view.AffichagePlateau;
 import view.Menu;
@@ -10,37 +18,38 @@ public class Start extends Application{
 
 	public void start(Stage primaryStage) throws Exception{
 		
-		/*Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-		SessionFactory sf = cfg.buildSessionFactory();
 		
-		Obstacle obstacle = new Obstacle(0,0,"test", "rouge", 1,1);
-		Session session = sf.openSession();
-		session.beginTransaction();
-		session.save(obstacle);
-		session.getTransaction().commit();
-		
-		session.close();
-		InputStream inputStream = this.getClass()
+		/*InputStream inputStream = this.getClass()
 		  .getClassLoader()
 		  .getResourceAsStream("profile.png");
 		 
 		if(inputStream == null) {
 		    fail("Unable to get resources");
 		}
-		user.setPhoto(IOUtils.toByteArray(inputStream));
+		user.setPhoto(IOUtils.toByteArray(inputStream)); */
 
-		*
-		*
-		*/
+		
 		//Parent root = FXMLLoader.load(getClass().getRepoint_depart("sample.fxml"));
 		
 		//AffichagePlateau interfaceJeu = new AffichagePlateau(primaryStage);
-		Menu menuJeu = new Menu(primaryStage);
+		//Menu menuJeu = new Menu(primaryStage);
 		
-		Plateau plateau = new Plateau();
+		//Plateau plateau = new Plateau();
 	}
-	
-	public static void main(String[] args) {	
-		launch(args);
+	public static void test() {
+		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+		SessionFactory sf = cfg.buildSessionFactory();
+		
+		Obstacle obstacle = new Obstacle(Effets.PASSANT,"Mur",null, 1,1, Obstacles.BOUE);
+		Session session = sf.openSession();
+		session.beginTransaction();
+		session.save(obstacle);
+		session.getTransaction().commit();
+		
+		session.close();
+	}
+	public static void main(String[] args) {
+		ORM.lancer();
+		//launch(args);
 	}
 }

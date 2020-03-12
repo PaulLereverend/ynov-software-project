@@ -7,23 +7,33 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import entities.Effets;
 import entities.Obstacle;
+import entities.Obstacles;
 //Hibernate JPA With H2 Example
 
 public class ORM {
 
-	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("db");
-	static EntityManager entityManager = emf.createEntityManager();
+	//static EntityManagerFactory emf = Persistence.createEntityManagerFactory("db");
+	//static EntityManager session = emf.createEntityManager();
+	
+	static Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+	static SessionFactory sf = cfg.buildSessionFactory();
+	static Session session = sf.openSession();
 	
   public static void lancer() {
     ORM example = new ORM();
     System.out.println("After Sucessfully insertion ");
-//	Obstacle obstacle = new Obstacle(0,0,"Mur", "rouge", 1,1);
+	Obstacle obstacle = new Obstacle(Effets.PASSANT,"Mur",null, 1,1, Obstacles.BOUE);
 	
 	
     //Obstacle student2 = example.Obstacle("Anoop");
-//	example.saveObstacle(obstacle);
-//    example.listObstacles();
+	example.saveObstacle(obstacle);
+	example.listObstacles();
     System.out.println("After Sucessfully modification ");
     //example.listStudent();
     System.out.println("After Sucessfully deletion ");
@@ -35,49 +45,48 @@ public class ORM {
 
   public static Obstacle saveObstacle(Obstacle obstacle) {
     try {
-      entityManager.getTransaction().begin();
-      entityManager.persist(obstacle);
-      entityManager.getTransaction().commit();
+      session.getTransaction().begin();
+      session.persist(obstacle);
+      session.getTransaction().commit();
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      session.getTransaction().rollback();
     }
     return obstacle;
   }
 
   public static void listObstacles() {
     try {
-      entityManager.getTransaction().begin();
-      @SuppressWarnings("unchecked")
-      List<Obstacle> obstacles = entityManager.createQuery("from Obstacle").getResultList();
+      session.getTransaction().begin();
+      List<Obstacle> obstacles = session.createQuery("from Obstacle").list();
       for (Obstacle obstacle : obstacles) {
-          System.out.println(obstacle.getNom()+"cc");
+          System.out.println(obstacle.getNom());
       } 
-      entityManager.getTransaction().commit();
+      session.getTransaction().commit();
     }catch (Exception e) {
     	e.printStackTrace();
-      entityManager.getTransaction().rollback();
+      session.getTransaction().rollback();
     }
   }
 
   /*public void updateStudent(Long studentId, String studentName) {
     try {
-      entityManager.getTransaction().begin();
-      Student student = (Student) entityManager.find(Student.class, studentId);
+      session.getTransaction().begin();
+      Student student = (Student) session.find(Student.class, studentId);
       student.setStudentName(studentName);
-      entityManager.getTransaction().commit();
+      session.getTransaction().commit();
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      session.getTransaction().rollback();
     }
   }
 
   public void deleteStudent(Long studentId) {
     try {
-      entityManager.getTransaction().begin();
-      Student student = (Student) entityManager.find(Student.class, studentId);
-      entityManager.remove(student);
-      entityManager.getTransaction().commit();
+      session.getTransaction().begin();
+      Student student = (Student) session.find(Student.class, studentId);
+      session.remove(student);
+      session.getTransaction().commit();
     } catch (Exception e) {
-      entityManager.getTransaction().rollback();
+      session.getTransaction().rollback();
     }
   }*/
 }
