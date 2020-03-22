@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import model.ORM;
 
 public class Menu {
 	
@@ -27,17 +28,17 @@ public class Menu {
         	if (i == 0) {
         		bouton.setText("Jouer");
         		bouton.setOnMouseClicked((event)->{
-        			new ChoisirNiveau(primaryStage, true);
+        			new ChoisirNiveau(primaryStage, false);
         		});
 			}else if(i == 1) {
 				bouton.setText("Modifier un niveau");
 				bouton.setOnMouseClicked((event)->{
-        			new ChoisirNiveau(primaryStage, false);
+        			new ChoisirNiveau(primaryStage, true);
         		});
 			}else {
 				bouton.setText("Créer un niveau");
 				bouton.setOnMouseClicked((event)->{
-        			new AffichagePlateau(primaryStage, false);
+        			new AffichagePlateau(primaryStage, true);
         		});
 			}
 			gridPane.add(bouton, 0, i);
@@ -45,10 +46,7 @@ public class Menu {
 		
 		Scene scene = new Scene(gridPane);
 
-		primaryStage.setTitle("Labyrinthe");
-		primaryStage.sizeToScene();
 		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
 }
