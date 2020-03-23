@@ -1,6 +1,7 @@
 package model;
 
 import entities.Obstacle;
+import javafx.scene.Node;
 import view.AffichagePlateau;
 
 public class Case {
@@ -10,11 +11,12 @@ public class Case {
 	private Obstacle obstacle;
 	private boolean explored;
 	private int distance;
+	private Case lastCase;
 	
-	public Case(int row, int col, Obstacle type_obtacle) {
+	public Case(int row, int col, Obstacle obtacle) {
 		this.ligne = row;
 		this.colonne = col;
-		this.setObstacle(type_obtacle);
+		this.setObstacle(obtacle);
 	}
 
 	public int getLigne() {
@@ -54,12 +56,11 @@ public class Case {
 		return this.distance;
 	}
 
-	public double getEuclidDist() {		//CALCULATES THE EUCLIDIAN DISTANCE TO THE FINISH NODE
-		int xdif = Math.abs(ligne-AffichagePlateau.plateau.getCaseArrivee().getLigne());
-		int ydif = Math.abs(colonne-AffichagePlateau.plateau.getCaseArrivee().getColonne());
-		double dToEnd = Math.sqrt((xdif*xdif)+(ydif*ydif));
-		return dToEnd;
+	public Case getLastCase() {
+		return lastCase;
 	}
-	
 
+	public void setLastCase(Case lastCase) {
+		this.lastCase = lastCase;
+	}
 }

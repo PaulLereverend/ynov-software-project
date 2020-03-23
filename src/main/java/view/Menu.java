@@ -1,5 +1,6 @@
 package view;
 
+import controller.Dijkstra;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

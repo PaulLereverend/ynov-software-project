@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import entities.Obstacles;
+
+import controller.Dijkstra;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
