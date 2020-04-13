@@ -188,7 +188,7 @@ public class AffichagePlateau {
 		return false;
 	}
 	
-	public void clorierCase(Case c, Color couleur) {
+	public void colorierCase(Case c, Color couleur) {
 		for (Node node : gridPane.getChildren()) {
 			if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
 				if (GridPane.getColumnIndex(node) == c.getColonne() && GridPane.getRowIndex(node) == c.getLigne()) {

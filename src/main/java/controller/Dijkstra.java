@@ -53,14 +53,14 @@ public class Dijkstra {
 		Case lastCase = c;
 		for (Case caz : voisins) {
 			if(caz.getObstacle() == null && !caz.isExplored()) {
-				//this.explorer(caz, lastCase, distance);
+				this.explorer(caz, lastCase, distance);
 				explored.add(caz);
 			}
 			lastCase = caz;
 		}
 		return explored;
 	}
-	/*public void explorer(Case c, Case lastCase, int distance) {
+	public void explorer(Case c, Case lastCase, int distance) {
 		System.out.println("explorer : "+ c.getLigne()+ " / "+ c.getColonne());
 		c.setExplored(true);
 		this.view.colorierCase(c, Color.blue);
@@ -76,5 +76,5 @@ public class Dijkstra {
 			this.view.colorierCase(c, Color.yellow);
 			c = c.getLastCase();
 		}
-	}*/
+	}
 }
