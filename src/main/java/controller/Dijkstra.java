@@ -15,12 +15,19 @@ public class Dijkstra {
 	private AffichagePlateau view;
 	
 	
-	
+	/**
+	 * Constructeur de l'IA Dijkstra
+	 * @param grille
+	 * @param view
+	 */
 	public Dijkstra(Plateau grille, AffichagePlateau view) {
 		super();
 		this.grille = grille;
 		this.view = view;
 	}
+	/**
+	 * Lance la recherche de solutions de Dijkstra
+	 */
 	public void start() {
 		ArrayList<Case> priority = new ArrayList<Case>();
 		
@@ -47,6 +54,12 @@ public class Dijkstra {
 			}
 		}
 	}
+	/**
+	 * Recherche 
+	 * @param c
+	 * @param distance
+	 * @return
+	 */
 	public ArrayList<Case> explorerVoisins(Case c, int distance){
 		ArrayList<Case> explored = new ArrayList<Case>();
 		ArrayList<Case> voisins = this.grille.getCasesArround(c);
