@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import entities.Effets;
+import entities.Niveau;
 import entities.Obstacle;
 import entities.Obstacles;
 //Hibernate JPA With H2 Example
@@ -27,16 +28,16 @@ public class ORM {
 	
   public static void lancer() {
     ORM example = new ORM();
-    System.out.println("After Sucessfully insertion ");
-	Obstacle obstacle = new Obstacle(Effets.PASSANT,"Mur",null, 1,1, Obstacles.BOUE);
+    //System.out.println("After Sucessfully insertion ");
+	//Obstacle obstacle = new Obstacle(Effets.PASSANT,"Mur",null, 1,1, Obstacles.BOUE);
 	
 	
     //Obstacle student2 = example.Obstacle("Anoop");
-	example.saveObstacle(obstacle);
-	example.listObstacles();
-    System.out.println("After Sucessfully modification ");
+	//example.saveObstacle(obstacle);
+	//example.listObstacles();
+    //System.out.println("After Sucessfully modification ");
     //example.listStudent();
-    System.out.println("After Sucessfully deletion ");
+    //System.out.println("After Sucessfully deletion ");
     //example.deleteStudent(student2.getStudentId());
     //example.listStudent();
    
@@ -53,6 +54,17 @@ public class ORM {
     }
     return obstacle;
   }
+  
+  public static Niveau saveNiveau(Niveau niveau) {
+	    try {
+	      session.getTransaction().begin();
+	      session.persist(niveau);
+	      session.getTransaction().commit();
+	    } catch (Exception e) {
+	      session.getTransaction().rollback();
+	    }
+	    return niveau;
+	  }
 
   public static void listObstacles() {
     try {
@@ -67,6 +79,22 @@ public class ORM {
       session.getTransaction().rollback();
     }
   }
+  
+  public static List<Niveau> listNiveaux() {
+	    try {
+	      session.getTransaction().begin();
+	      List<Niveau> niveaux = session.createQuery("from Niveau").list();
+	      for (Niveau niveau : niveaux) {
+	          System.out.println(niveau.getNom());
+	      }
+	      session.getTransaction().commit();
+	      return niveaux;
+	    }catch (Exception e) {
+	    	e.printStackTrace();
+	      session.getTransaction().rollback();
+	    }
+	    return null;
+	  }
 
   /*public void updateStudent(Long studentId, String studentName) {
     try {

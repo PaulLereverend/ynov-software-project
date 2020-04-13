@@ -31,12 +31,15 @@ public class Start extends Application{
 		
 		//Parent root = FXMLLoader.load(getClass().getRepoint_depart("sample.fxml"));
 		
-		//AffichagePlateau interfaceJeu = new AffichagePlateau(primaryStage);
-		//Menu menuJeu = new Menu(primaryStage);
+		Menu menuJeu = new Menu(primaryStage);
+		
+		primaryStage.setTitle("Labyrinthe");
+		primaryStage.sizeToScene();
+		primaryStage.show();
 		
 		//Plateau plateau = new Plateau();
 	}
-	public static void test() {
+	/*public static void test() {
 		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 		SessionFactory sf = cfg.buildSessionFactory();
 		
@@ -47,9 +50,10 @@ public class Start extends Application{
 		session.getTransaction().commit();
 		
 		session.close();
-	}
+	}*/
 	public static void main(String[] args) {
 		ORM.lancer();
-		//launch(args);
+		//Menu menuJeu = new Menu(primaryStage);
+		launch(args);
 	}
 }

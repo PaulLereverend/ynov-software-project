@@ -35,10 +35,6 @@ public class Niveau {
 	
 	@OneToMany(mappedBy = "niveau", cascade = CascadeType.ALL)
     private Set<Historique> historique;
-	
-	public Niveau() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public Niveau(int id, String nom, String createur, Date dateDeCreation, Date dateDeModification,
 			Plateau composition) {
@@ -49,6 +45,10 @@ public class Niveau {
 		this.dateDeCreation = dateDeCreation;
 		this.dateDeModification = dateDeModification;
 		this.composition = composition;
+	}
+	
+	public Niveau() {
+		// TODO Auto-generated constructor stub
 	}
 
 

@@ -1,25 +1,15 @@
 package view;
 
 import java.awt.Color;
-import java.util.ArrayList;
-
 import entities.Obstacles;
 
-import controller.Dijkstra;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -36,7 +26,7 @@ public class AffichagePlateau {
 	
 	private GridPane gridPaneSide = new GridPane();
 	
-	private Plateau plateau = new Plateau();
+	private Plateau plateau = Plateau.getPlateau();
 	
 	//click sur icone
 	boolean putObstacle = false;

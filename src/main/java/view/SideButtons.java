@@ -119,12 +119,27 @@ public class SideButtons {
 	}
 	
 	public void displayExecView() {
-		Button readObstacle = new Button();
-    	readObstacle.setOnMouseClicked((event)->{
-    		ORM.listObstacles();
+		int i = 2;
+		Button astar = new Button();
+		astar.setOnMouseClicked((event)->{
+    		//lancer astar
 		});
-    	readObstacle.setText("readObstacle");
-    	gridPaneSide.add(readObstacle, 0, 2);
+		astar.setText("A Star");
+    	gridPaneSide.add(astar, 0, i);
+    	
+    	Button dijkstra = new Button();
+    	dijkstra.setOnMouseClicked((event)->{
+    		//lance dijkstra
+		});
+    	dijkstra.setText("Dijkstra");
+    	gridPaneSide.add(dijkstra, 0, i+2);
+    	
+    	Button retour = new Button();
+    	retour.setOnMouseClicked((event)->{
+    		new Menu(primaryStage);
+		});
+    	retour.setText("Retour");
+    	gridPaneSide.add(retour, 0, i+4);
 		
 	}
 

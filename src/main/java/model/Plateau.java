@@ -10,14 +10,26 @@ public class Plateau {
 	
 	private int NB_CASES = 19;
 	public Case[][] casesTab = new Case[NB_CASES][NB_CASES];
+	private static volatile Plateau plateau = null;
 	
-	public Plateau() {
+	private Plateau() {
 		for (int i = 0; i < casesTab.length; i++) {
 			for (int j = 0; j < casesTab.length; j++) {
 				casesTab[i][j] = new Case(i, j, null);
 			}
 		}
 	}
+	
+	public final static Plateau getPlateau() {
+        if (Plateau.plateau == null) {
+           synchronized(Plateau.class) {
+             if (Plateau.plateau == null) {
+            	 Plateau.plateau = new Plateau();
+             }
+           }
+        }
+        return Plateau.plateau;
+    }
 	
 	public int getNbCases() {
 		return NB_CASES;
