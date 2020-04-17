@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -68,6 +69,9 @@ public class AffichagePlateau {
 			}
 		}
 		
+		setDefaultObstable(2, 2, new ObstacleIcon(new Image("file:src/main/resources/drapeau.png"), Obstacles.DEPART));
+		setDefaultObstable(16, 16, new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE));
+		
 		/*
 		 * Création du menu des icones obstacles 
 		 */
@@ -87,6 +91,26 @@ public class AffichagePlateau {
 
 	public GridPane getGridPane() {
 		return gridPane;
+	}
+	
+	private void setDefaultObstable(int row, int column, ObstacleIcon obstacleIcon) {
+		for (Node node : gridPane.getChildren()) {
+			if (GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == column) {
+				Pane p = (Pane)node;
+				ImageView image_view = new ImageView(obstacleIcon.getImg());
+		    	image_view.setFitWidth(30);
+		    	image_view.setFitHeight(30);
+		    	image_view.setUserData(obstacleIcon.getTypeObstacle());
+			    if (obstacleIcon.getTypeObstacle() == Obstacles.ARRIVEE) {
+					endExist = true;
+				}else if(obstacleIcon.getTypeObstacle() == Obstacles.DEPART) {
+					startExist = true;
+				}
+			    p.getChildren().clear();
+			    p.getChildren().add(image_view);
+			    
+			}
+		}
 	}
 	
 	private void initPlateau(Case c) {
