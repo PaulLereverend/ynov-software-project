@@ -77,7 +77,7 @@ public class AffichagePlateau {
 		 */
 		SideButtons sb = new SideButtons(this, primaryStage, gridPaneSide);
 		if (isEditView) {
-			sb.displayEditView();
+			sb.displayEditView(this.plateau);
 		}else {
 			sb.displayExecView();
 		}

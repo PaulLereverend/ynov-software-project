@@ -1,7 +1,9 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import entities.Niveau;
 import entities.Obstacles;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.ORM;
 import model.ObstacleIcon;
+import model.Plateau;
 
 public class SideButtons {
 	
@@ -30,7 +33,7 @@ public class SideButtons {
 		this.primaryStage = primaryStage;
 	}
 	
-	public void displayEditView() {
+	public void displayEditView(Plateau plateau) {
 		ArrayList<ObstacleIcon> pathImg = new ArrayList<>();
 		ObstacleIcon o = new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE);
 		pathImg.add(o);
@@ -40,10 +43,10 @@ public class SideButtons {
 		pathImg.add(o);
 		o = new ObstacleIcon(new Image("file:src/main/resources/mur.png"), Obstacles.MUR);
 		pathImg.add(o);
-		initIcon(pathImg);
+		initIcon(pathImg, plateau);
 	}
 	
-	public void initIcon(ArrayList<ObstacleIcon> pathImg) {
+	public void initIcon(ArrayList<ObstacleIcon> pathImg, Plateau plateau) {
 		int i = 1;
 		for (ObstacleIcon obsIcon : pathImg) {
 			Pane pane = createIcon(obsIcon);
@@ -77,6 +80,7 @@ public class SideButtons {
     	
     	Button save = new Button();
     	save.setOnMouseClicked((event)->{
+    		Niveau niveau = new Niveau("nom", "createur", new Date(), new Date(), plateau);
     		//ORM.saveObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 0, 0, Obstacles.MUR));
     		ORM.listNiveaux();
 		});
