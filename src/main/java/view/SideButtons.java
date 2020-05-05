@@ -78,6 +78,7 @@ public class SideButtons {
     	Button save = new Button();
     	save.setOnMouseClicked((event)->{
     		//ORM.saveObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 0, 0, Obstacles.MUR));
+    		ORM.listNiveaux();
 		});
     	save.setStyle("-fx-background-color:lightgreen;");
     	save.setText("Sauvegarder");
