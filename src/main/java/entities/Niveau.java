@@ -33,13 +33,13 @@ public class Niveau {
 	private Date dateDeModification;
 	
 	@Column(name = "composition")
-	private Plateau composition;
+	private byte[] composition;
 	
 	@OneToMany(mappedBy = "niveau", cascade = CascadeType.ALL)
     private Set<Historique> historique;
 
 	public Niveau(int id, String nom, String createur, Date dateDeCreation, Date dateDeModification,
-			Plateau composition) {
+			byte[] composition) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -49,11 +49,6 @@ public class Niveau {
 		this.composition = composition;
 	}
 	
-	public Niveau() {
-		// TODO Auto-generated constructor stub
-	}
-
-
 	public Set<Historique> getHistorique() {
 		return historique;
 	}
@@ -102,11 +97,11 @@ public class Niveau {
 		this.dateDeModification = dateDeModification;
 	}
 
-	public Plateau getComposition() {
+	public byte[] getComposition() {
 		return composition;
 	}
 
-	public void setComposition(Plateau composition) {
+	public void setComposition(byte[] composition) {
 		this.composition = composition;
 	}
 	
