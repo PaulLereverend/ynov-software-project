@@ -34,6 +34,9 @@ public class Plateau {
 	public int getNbCases() {
 		return NB_CASES;
 	}
+	public int size() {
+		return NB_CASES*NB_CASES;
+	}
 	
 	public Case getCase(int row, int col) {
 		return casesTab[row][col];
