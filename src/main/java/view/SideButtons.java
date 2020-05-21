@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controller.Dijkstra;
 import entities.Niveau;
 import entities.Obstacles;
 import javafx.event.EventHandler;
@@ -80,7 +81,8 @@ public class SideButtons {
     	
     	Button save = new Button();
     	save.setOnMouseClicked((event)->{
-    		Niveau niveau = new Niveau("nom", "createur", new Date(), new Date(), plateau);
+    		// problème ici 
+    		Niveau niveau = new Niveau("nom", "createur", new Date(), new Date(), null);
     		//ORM.saveObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 0, 0, Obstacles.MUR));
     		ORM.listNiveaux();
 		});
@@ -131,9 +133,15 @@ public class SideButtons {
 		});
 		astar.setText("A Star");
     	gridPaneSide.add(astar, 0, i);
+    	astar.setOnMouseClicked((event)->{
+    		// lance astar
+		});
     	
     	Button dijkstra = new Button();
     	dijkstra.setOnMouseClicked((event)->{
+    		System.out.println("Lancement dijkstra");
+    		Dijkstra dij = new Dijkstra(this.affichagePlateau.getPlateau(), this.affichagePlateau);
+    		dij.start();
     		//lance dijkstra
 		});
     	dijkstra.setText("Dijkstra");

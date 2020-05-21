@@ -30,21 +30,18 @@ public class Dijkstra {
 	 */
 	public void start() {
 		ArrayList<Case> priority = new ArrayList<Case>();
-		
-		priority.add(grille.getCaseDepart());	
+		System.out.println(this.grille.getNbCases());
+		priority.add(this.grille.getCaseDepart());	
+		System.out.println(this.grille.getCaseArrivee().getObstacle().getType() == Obstacles.ARRIVEE);
+		ArrayList<Case> parcourues = new ArrayList<Case>();
 		while(!termine) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			if(priority.size() <= 0) {	
 				this.termine = true;
 				break;
 			}
 			int hops = priority.get(0).getDistance()+1;	
 			ArrayList<Case> explored = this.explorerVoisins(priority.get(0), hops);
+			parcourues.addAll(explored);
 			if(explored.size() > 0) {
 				priority.remove(0);	
 				priority.addAll(explored);
@@ -52,6 +49,13 @@ public class Dijkstra {
 			} else {
 				priority.remove(0);
 			}
+		}
+		this.afficherCouleurs(parcourues);
+		
+	}
+	private void afficherCouleurs(ArrayList<Case> parcourues) {
+		for (Case case1 : parcourues) {
+			this.view.colorierCase(case1, case1.getColor());
 		}
 	}
 	/**
@@ -63,30 +67,30 @@ public class Dijkstra {
 	public ArrayList<Case> explorerVoisins(Case c, int distance){
 		ArrayList<Case> explored = new ArrayList<Case>();
 		ArrayList<Case> voisins = this.grille.getCasesArround(c);
-		Case lastCase = c;
 		for (Case caz : voisins) {
-			if(caz.getObstacle() == null && !caz.isExplored()) {
-				this.explorer(caz, lastCase, distance);
+			if(!caz.isExplored() && this.termine == false) {
+				this.explorer(caz, c, distance);
+				caz.setExplored(true);
 				explored.add(caz);
 			}
-			lastCase = caz;
+			//lastCase = caz;
 		}
 		return explored;
 	}
 	public void explorer(Case c, Case lastCase, int distance) {
-		System.out.println("explorer : "+ c.getLigne()+ " / "+ c.getColonne());
-		c.setExplored(true);
-		this.view.colorierCase(c, Color.blue);
+		c.setColor(Color.blue);
 		c.setLastCase(lastCase);
 		c.setDistance(distance);
 		if(c.getObstacle() != null && c.getObstacle().getType() == Obstacles.ARRIVEE) {
+			System.out.println("terminé");
 			termine = true;
 			this.afficherChemin(c);
 		}
 	}
 	public void afficherChemin(Case c) {
-		while(c.getObstacle() != null && c.getObstacle().getType() != Obstacles.DEPART) {
-			this.view.colorierCase(c, Color.yellow);
+		while(c != this.grille.getCaseDepart()) {
+			System.out.println(c);
+			c.setColor(Color.yellow);
 			c = c.getLastCase();
 		}
 	}
