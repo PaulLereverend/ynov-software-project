@@ -71,7 +71,8 @@ public class AffichagePlateau {
 		
 		setDefaultObstable(2, 2, new ObstacleIcon(new Image("file:src/main/resources/drapeau.png"), Obstacles.DEPART));
 		setDefaultObstable(16, 16, new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE));
-		
+		plateau.setCaseDepart(2, 2);
+		plateau.setCaseArrivee(16, 16);
 		/*
 		 * Création du menu des icones obstacles 
 		 */
