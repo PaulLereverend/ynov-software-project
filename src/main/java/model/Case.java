@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Color;
+
 import entities.Obstacle;
 import javafx.scene.Node;
 import view.AffichagePlateau;
@@ -12,6 +14,7 @@ public class Case {
 	private boolean explored;
 	private int distance;
 	private Case lastCase;
+	private Color color;
 	
 	public Case(int row, int col, Obstacle obtacle) {
 		this.ligne = row;
@@ -63,4 +66,18 @@ public class Case {
 	public void setLastCase(Case lastCase) {
 		this.lastCase = lastCase;
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	@Override
+	public String toString() {
+		return "Case [ligne=" + ligne + ", colonne=" + colonne + "]";
+	}
+	
 }
