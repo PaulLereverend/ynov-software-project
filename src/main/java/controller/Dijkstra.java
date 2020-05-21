@@ -9,7 +9,7 @@ import model.Plateau;
 import view.AffichagePlateau;
 
 
-public class Dijkstra {
+public class Dijkstra implements Algorithme{
 	private boolean termine = false;
 	private Plateau grille;
 	private AffichagePlateau view;
@@ -55,6 +55,9 @@ public class Dijkstra {
 		for (Case case1 : parcourues) {
 			this.view.colorierCase(case1, case1.getColor());
 		}
+	}
+	public int calculerScore(ArrayList<Case> parcourues) {
+		return parcourues.size();
 	}
 	/**
 	 * Recherche 

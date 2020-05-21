@@ -35,6 +35,9 @@ public class Niveau {
 	@Column(name = "composition")
 	private byte[] composition;
 	
+	@Column(name = "score")
+	private int score = 0;
+	
 	@OneToMany(mappedBy = "niveau", cascade = CascadeType.ALL)
     private Set<Historique> historique;
 
@@ -101,6 +104,14 @@ public class Niveau {
 
 	public void setComposition(byte[] composition) {
 		this.composition = composition;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 }

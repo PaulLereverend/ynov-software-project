@@ -8,7 +8,7 @@ import model.Case;
 import model.Plateau;
 import view.AffichagePlateau;
 
-public class AStar {
+public class AStar implements Algorithme{
 
 	private boolean termine = false;
 	private Plateau grille;
@@ -56,6 +56,9 @@ public class AStar {
 		for (Case case1 : parcourues) {
 			this.view.colorierCase(case1, case1.getColor());
 		}
+	}
+	public int calculerScore(ArrayList<Case> parcourues) {
+		return parcourues.size();
 	}
 	public ArrayList<Case> trier(ArrayList<Case> sort) {
 		int c = 0;
@@ -110,30 +113,3 @@ public class AStar {
 		}
 	}
 }
-
-
-
-
-
-
-/*public void AStar() {
-	ArrayList<Node> priority = new ArrayList<Node>();
-	priority.add(map[startx][starty]);
-	while(solving) {
-		if(priority.size() <= 0) {
-			solving = false;
-			break;
-		}
-		int hops = priority.get(0).getHops()+1;
-		ArrayList<Node> explored = exploreNeighbors(priority.get(0),hops);
-		if(explored.size() > 0) {
-			priority.remove(0);
-			priority.addAll(explored);
-			Update();
-			delay();
-		} else {
-			priority.remove(0);
-		}
-		sortQue(priority);	//SORT THE PRIORITY QUE
-	}
-}*/
