@@ -30,9 +30,7 @@ public class Dijkstra {
 	 */
 	public void start() {
 		ArrayList<Case> priority = new ArrayList<Case>();
-		System.out.println(this.grille.getNbCases());
 		priority.add(this.grille.getCaseDepart());	
-		System.out.println(this.grille.getCaseArrivee().getObstacle().getType() == Obstacles.ARRIVEE);
 		ArrayList<Case> parcourues = new ArrayList<Case>();
 		while(!termine) {
 			if(priority.size() <= 0) {	
@@ -89,7 +87,6 @@ public class Dijkstra {
 	}
 	public void afficherChemin(Case c) {
 		while(c != this.grille.getCaseDepart()) {
-			System.out.println(c);
 			c.setColor(Color.yellow);
 			c = c.getLastCase();
 		}
