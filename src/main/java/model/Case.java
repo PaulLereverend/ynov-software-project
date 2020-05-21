@@ -15,6 +15,7 @@ public class Case {
 	private int distance;
 	private Case lastCase;
 	private Color color;
+	private double distance_arrivee;
 	
 	public Case(int row, int col, Obstacle obtacle) {
 		this.ligne = row;
@@ -75,6 +76,13 @@ public class Case {
 		this.color = color;
 	}
 
+	public double getEuclidDist(Case arrivee) {		//CALCULATES THE EUCLIDIAN DISTANCE TO THE FINISH NODE
+		int xdif = Math.abs(this.getColonne()-arrivee.getColonne());
+		int ydif = Math.abs(this.getLigne()-arrivee.getLigne());
+		this.distance_arrivee = Math.sqrt((xdif*xdif)+(ydif*ydif));
+		return this.distance_arrivee;
+	}
+	
 	@Override
 	public String toString() {
 		return "Case [ligne=" + ligne + ", colonne=" + colonne + "]";

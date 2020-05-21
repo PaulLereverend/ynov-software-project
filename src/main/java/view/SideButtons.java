@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controller.AStar;
 import controller.Dijkstra;
 import entities.Niveau;
 import entities.Obstacles;
@@ -128,12 +129,12 @@ public class SideButtons {
 	public void displayExecView() {
 		int i = 2;
 		Button astar = new Button();
-		astar.setOnMouseClicked((event)->{
-    		//lancer astar
-		});
 		astar.setText("A Star");
     	gridPaneSide.add(astar, 0, i);
     	astar.setOnMouseClicked((event)->{
+    		System.out.println("Lancement A*");
+    		AStar a = new AStar(this.affichagePlateau.getPlateau(), this.affichagePlateau);
+    		a.start();
     		// lance astar
 		});
     	
