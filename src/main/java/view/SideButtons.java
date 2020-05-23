@@ -1,5 +1,8 @@
 package view;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -82,10 +85,20 @@ public class SideButtons {
     	
     	Button save = new Button();
     	save.setOnMouseClicked((event)->{
-    		// problème ici 
-    		Niveau niveau = new Niveau("nom", "createur", new Date(), new Date(), null);
+    		System.out.println("CLICK");
+    		System.out.println(plateau.getCaseDepart());
+    		ByteArrayOutputStream out = new ByteArrayOutputStream();
+    		try {
+    	    	ObjectOutputStream os = new ObjectOutputStream(out);
+				os.writeObject(plateau);
+				Niveau niveau = new Niveau(levelName.getText(), "Hugo", new Date(), new Date(), out.toByteArray());
+				ORM.saveNiveau(niveau);
+				new Menu(primaryStage);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		//ORM.saveObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 0, 0, Obstacles.MUR));
-    		ORM.listNiveaux();
 		});
     	save.setStyle("-fx-background-color:lightgreen;");
     	save.setText("Sauvegarder");

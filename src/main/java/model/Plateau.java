@@ -1,12 +1,18 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import entities.Effets;
 import entities.Obstacle;
 import entities.Obstacles;
 
 
-public class Plateau {
+public class Plateau implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private int NB_CASES = 19;
 	public Case[][] casesTab = new Case[NB_CASES][NB_CASES];
@@ -84,21 +90,37 @@ public class Plateau {
 		return listVoisins;
 	}
 	
-	public void setCaseDepart(int row, int col) {
-		getCase(row, col).setObstacle(new Obstacle(Effets.PASSANT, "depart", null, 1, 1, Obstacles.DEPART));
-		getCase(row, col).setDistance(0);
+	public void setCaseDepart(int row, int col, boolean isRemove) {
+		if (!isRemove) {
+			getCase(row, col).setObstacle(new Obstacle(Effets.PASSANT, "depart", null, 1, 1, Obstacles.DEPART));
+			getCase(row, col).setDistance(0);
+		} else {
+			getCase(row, col).setObstacle(null);
+		}
 	}
 	
-	public void setCaseArrivee(int row, int col) {
-		getCase(row, col).setObstacle(new Obstacle(Effets.PASSANT, "arrivee", null, 1, 1, Obstacles.ARRIVEE));
+	public void setCaseArrivee(int row, int col, boolean isRemove) {
+		if (!isRemove) {
+			getCase(row, col).setObstacle(new Obstacle(Effets.PASSANT, "arrivee", null, 1, 1, Obstacles.ARRIVEE));
+		} else {
+			getCase(row, col).setObstacle(null);
+		}
 	}
 	
-	public void setCaseBoue(int row, int col) {
-		getCase(row, col).setObstacle(new Obstacle(Effets.RALENTIS, "boue", null, 1, 1, Obstacles.BOUE));
+	public void setCaseBoue(int row, int col, boolean isRemove) {
+		if (!isRemove) {
+			getCase(row, col).setObstacle(new Obstacle(Effets.RALENTIS, "boue", null, 1, 1, Obstacles.BOUE));
+		} else {
+			getCase(row, col).setObstacle(null);
+		}
 	}
 	
-	public void setCaseMur(int row, int col) {
-		getCase(row, col).setObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 1, 1, Obstacles.MUR));
+	public void setCaseMur(int row, int col, boolean isRemove) {
+		if (!isRemove) {
+			getCase(row, col).setObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 1, 1, Obstacles.MUR));
+		} else {
+			getCase(row, col).setObstacle(null);
+		}
 	}
 	
 	public Case getCaseDepart() {

@@ -39,15 +39,17 @@ public class ChoisirNiveau {
 			gridPane.add(level, 0, i);
 		}*/
 		int i;
-		for (i = 0; i < 3; i++) {
+		List<Niveau> listNiveau = ORM.listNiveaux();
+		for (i = 0 ; i < listNiveau.size() ; i++) {
 			RowConstraints row = new RowConstraints(30);
 			gridPane.getRowConstraints().add(row);
 			
 			Button level = new Button();
 			level.setMinWidth(150);
-			level.setText("Niveau "+i);
+			level.setText(listNiveau.get(i).getNom());
+			final int i2 = i;
 			level.setOnMouseClicked((event)->{
-    			new AffichagePlateau(primaryStage, isEditView);
+    			new AffichagePlateau(primaryStage, isEditView, listNiveau.get(i2).getComposition());
     		});
 			
 			gridPane.add(level, 0, i);

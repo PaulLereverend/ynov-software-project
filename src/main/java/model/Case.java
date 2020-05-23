@@ -1,12 +1,17 @@
 package model;
 
+import java.io.Serializable;
 import java.awt.Color;
-
 import entities.Obstacle;
 import javafx.scene.Node;
 import view.AffichagePlateau;
 
-public class Case {
+public class Case implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private int ligne;
 	private int colonne;

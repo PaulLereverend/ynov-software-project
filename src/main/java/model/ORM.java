@@ -70,8 +70,9 @@ public class ORM {
     try {
       session.getTransaction().begin();
       List<Obstacle> obstacles = session.createQuery("from Obstacle").list();
+      System.out.println(obstacles.size());
       for (Obstacle obstacle : obstacles) {
-          System.out.println(obstacle.getNom());
+          System.out.println("coucou : " + obstacle.getNom());
       } 
       session.getTransaction().commit();
     }catch (Exception e) {
@@ -81,20 +82,24 @@ public class ORM {
   }
   
   public static List<Niveau> listNiveaux() {
-	    try {
-	      session.getTransaction().begin();
-	      List<Niveau> niveaux = session.createQuery("from Niveau").list();
-	      for (Niveau niveau : niveaux) {
-	          System.out.println(niveau.getNom());
-	      }
-	      session.getTransaction().commit();
-	      return niveaux;
-	    }catch (Exception e) {
-	    	e.printStackTrace();
-	      session.getTransaction().rollback();
-	    }
-	    return null;
-	  }
+	  try {
+		  session.getTransaction().begin();
+		  List<Niveau> niveaux = session.createQuery("from Niveau").list();
+		  if (niveaux.size() == 0) {
+			  System.out.println("Pas de niveau enregistré");
+		  }else {
+			  for (Niveau niveau : niveaux) {
+		          System.out.println(niveau.getNom());
+		      }
+		  }
+		  session.getTransaction().commit();
+		  return niveaux;
+	}catch (Exception e) {
+    	e.printStackTrace();
+      session.getTransaction().rollback();
+    }
+    return null;
+  }
 
   /*public void updateStudent(Long studentId, String studentName) {
     try {

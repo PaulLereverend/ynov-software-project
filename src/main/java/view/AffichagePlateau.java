@@ -1,6 +1,10 @@
 package view;
 
 import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 import entities.Obstacles;
 
 import javafx.event.EventHandler;
@@ -69,13 +73,83 @@ public class AffichagePlateau {
 			}
 		}
 		
-		setDefaultObstable(2, 2, new ObstacleIcon(new Image("file:src/main/resources/drapeau.png"), Obstacles.DEPART));
-		setDefaultObstable(16, 16, new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE));
-		plateau.setCaseDepart(2, 2);
-		plateau.setCaseArrivee(16, 16);
+		//setDefaultObstable(2, 2, new ObstacleIcon(new Image("file:src/main/resources/drapeau.png"), Obstacles.DEPART));
+		//setDefaultObstable(16, 16, new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE));
+		//plateau.setCaseDepart(2, 2);
+		//plateau.setCaseArrivee(16, 16);
 		/*
 		 * Création du menu des icones obstacles 
 		 */
+		SideButtons sb = new SideButtons(this, primaryStage, gridPaneSide);
+		if (isEditView) {
+			sb.displayEditView(this.plateau);
+		}else {
+			sb.displayExecView();
+		}
+		
+		root.getChildren().addAll(gridPane, gridPaneSide);
+		
+		Scene scene = new Scene(root);
+
+		primaryStage.setScene(scene);
+	}
+	
+	public AffichagePlateau(Stage primaryStage, boolean isEditView, byte[] plateauByte) {
+		super();
+		
+		ByteArrayInputStream in = new ByteArrayInputStream(plateauByte);
+	    ObjectInputStream is;
+		try {
+			is = new ObjectInputStream(in);
+			this.plateau = (Plateau) is.readObject();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//lignes
+		for (int i = 0; i < plateau.getNbCases(); i++) { 
+			RowConstraints row = new RowConstraints(30);
+			gridPane.getRowConstraints().add(row);
+			gridPaneSide.getRowConstraints().add(row);
+		}
+		
+		//colonnes
+		for (int j = 0; j < plateau.getNbCases(); j++) { 
+			ColumnConstraints col = new ColumnConstraints(30); 
+			gridPane.getColumnConstraints().add(col);  
+		}
+		
+		for (Case[] cases : plateau.casesTab) {
+			for (Case c : cases) {
+				Image img = null;
+				if (c.getObstacle() != null) {
+					if (c.getObstacle().getType() == Obstacles.BOUE) {
+						img = new Image("file:src/main/resources/boue.png");
+					}else if (c.getObstacle().getType() == Obstacles.MUR) {
+						img = new Image("file:src/main/resources/mur.png");
+					}else if (c.getObstacle().getType() == Obstacles.DEPART) {
+						img = new Image("file:src/main/resources/drapeau.png");
+					}else if (c.getObstacle().getType() == Obstacles.ARRIVEE) {
+						img = new Image("file:src/main/resources/croix.png");
+					}
+					ObstacleIcon obsIcon = new ObstacleIcon(img, c.getObstacle().getType());
+			    	setDefaultObstable(c.getLigne(), c.getColonne(), obsIcon);
+				}
+			}
+		}
+		
+		HBox root = new HBox();
+	    root.setPadding(new Insets(20, 20, 20, 20));
+		
+		gridPane.setPadding(new Insets(20,20,20,20));
+		gridPane.setAlignment(Pos.CENTER);
+		gridPaneSide.setAlignment(Pos.CENTER);
+		gridPane.setGridLinesVisible(true);
+		
 		SideButtons sb = new SideButtons(this, primaryStage, gridPaneSide);
 		if (isEditView) {
 			sb.displayEditView(this.plateau);
@@ -164,12 +238,25 @@ public class AffichagePlateau {
 		    	image_view.setFitWidth(30);
 		    	image_view.setFitHeight(30);
 		    	image_view.setUserData(obstIconSelected.getTypeObstacle());
-		    	if (obstIconSelected.getTypeObstacle() == Obstacles.ARRIVEE) {
+	    	if (obstIconSelected.getTypeObstacle() == Obstacles.BOUE)
+	    	{
+		    	plateau.setCaseBoue(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), false);
+			}
+	    	else if(obstIconSelected.getTypeObstacle() == Obstacles.MUR) 
+	    	{
+				plateau.setCaseMur(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), false);
+			}
+	    	else if (obstIconSelected.getTypeObstacle() == Obstacles.ARRIVEE) 
+	    	{
+		    	plateau.setCaseArrivee(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), false);
 				endExist = true;
-			}else if(obstIconSelected.getTypeObstacle() == Obstacles.DEPART) {
+			}
+	    	else if(obstIconSelected.getTypeObstacle() == Obstacles.DEPART) 
+	    	{
+				plateau.setCaseDepart(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), false);
 				startExist = true;
 			}
-		    	pane.getChildren().add(image_view);
+		    pane.getChildren().add(image_view);
 		    	
     	}
     	else if(putObstacle && isClear) 
@@ -178,12 +265,26 @@ public class AffichagePlateau {
     		{
     			if (pane.getChildren().get(0).getUserData() != null) 
     			{
-            		if (pane.getChildren().get(0).getUserData().equals(Obstacles.ARRIVEE)) {
+    				if (obstIconSelected.getTypeObstacle() == Obstacles.BOUE) 
+    				{
+    			    	plateau.setCaseBoue(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), true);
+    				}
+    				else if(obstIconSelected.getTypeObstacle() == Obstacles.MUR) 
+    				{
+    					plateau.setCaseMur(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), true);
+    				}
+    				else if (pane.getChildren().get(0).getUserData().equals(Obstacles.ARRIVEE)) 
+    				{
+            			plateau.setCaseArrivee(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), true);
 						endExist = false;
-					}else if (pane.getChildren().get(0).getUserData().equals(Obstacles.DEPART)) {
+					}
+    				else if (pane.getChildren().get(0).getUserData().equals(Obstacles.DEPART)) 
+    				{
+						plateau.setCaseDepart(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), true);
 						startExist = false;
 					}
     			}
+    			
         		pane.getChildren().clear();
     		}
     	}
