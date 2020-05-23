@@ -101,18 +101,21 @@ public class ORM {
     return null;
   }
 
-  /*public void updateStudent(Long studentId, String studentName) {
+  public static void updateNiveau(String nomNiveau, byte[] composition) {
     try {
       session.getTransaction().begin();
-      Student student = (Student) session.find(Student.class, studentId);
-      student.setStudentName(studentName);
+      System.out.println(nomNiveau);
+      List<Niveau> listNiveau = session.createQuery("from Niveau where nom = '"+nomNiveau+"'").list();
+      Niveau niveau = listNiveau.get(0);
+      niveau.setComposition(composition);
       session.getTransaction().commit();
     } catch (Exception e) {
-      session.getTransaction().rollback();
+    	System.out.println(e.getMessage());
+    	session.getTransaction().rollback();
     }
   }
 
-  public void deleteStudent(Long studentId) {
+  /*public void deleteStudent(Long studentId) {
     try {
       session.getTransaction().begin();
       Student student = (Student) session.find(Student.class, studentId);

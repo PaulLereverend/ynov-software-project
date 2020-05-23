@@ -16,28 +16,13 @@ public class ChoisirNiveau {
 		
 	private GridPane gridPane = new GridPane();
 
-	public ChoisirNiveau(Stage primaryStage, boolean isEditView) {
+	public ChoisirNiveau(Stage primaryStage, String type) {
 		super();
 		
 		gridPane.setPadding(new Insets(100,100,100,100));
 		gridPane.setAlignment(Pos.CENTER);
 		gridPane.setVgap(30);
 		
-		/*List<Niveau> niveauArr = ORM.listNiveaux();
-		for (int i = 0; i < niveauArr.size(); i++) {
-			Niveau niveau = niveauArr.get(i);
-			RowConstraints row = new RowConstraints(30);
-			gridPane.getRowConstraints().add(row);
-			
-			Button level = new Button();
-			level.setMinWidth(150);
-			level.setText(niveau.getNom());
-			level.setOnMouseClicked((event)->{
-    			new AffichagePlateau(primaryStage, isEditView);
-    		});
-			
-			gridPane.add(level, 0, i);
-		}*/
 		int i;
 		List<Niveau> listNiveau = ORM.listNiveaux();
 		for (i = 0 ; i < listNiveau.size() ; i++) {
@@ -49,7 +34,7 @@ public class ChoisirNiveau {
 			level.setText(listNiveau.get(i).getNom());
 			final int i2 = i;
 			level.setOnMouseClicked((event)->{
-    			new AffichagePlateau(primaryStage, isEditView, listNiveau.get(i2).getComposition());
+    			new AffichagePlateau(primaryStage, type, listNiveau.get(i2));
     		});
 			
 			gridPane.add(level, 0, i);

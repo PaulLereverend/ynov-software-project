@@ -43,8 +43,7 @@ public class Niveau {
 	@OneToMany(mappedBy = "niveau", cascade = CascadeType.ALL)
     private Set<Historique> historique;
 
-	public Niveau(String nom, String createur, Date dateDeCreation, Date dateDeModification,
-			byte[] composition) {
+	public Niveau(String nom, String createur, Date dateDeCreation, Date dateDeModification, byte[] composition) {
 		this.nom = nom;
 		this.createur = createur;
 		this.dateDeCreation = dateDeCreation;

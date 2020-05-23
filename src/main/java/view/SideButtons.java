@@ -38,7 +38,7 @@ public class SideButtons {
 		this.primaryStage = primaryStage;
 	}
 	
-	public void displayEditView(Plateau plateau) {
+	public void displayEditView(Niveau niveau, Plateau plateau, String type) {
 		ArrayList<ObstacleIcon> pathImg = new ArrayList<>();
 		ObstacleIcon o = new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE);
 		pathImg.add(o);
@@ -48,10 +48,10 @@ public class SideButtons {
 		pathImg.add(o);
 		o = new ObstacleIcon(new Image("file:src/main/resources/mur.png"), Obstacles.MUR);
 		pathImg.add(o);
-		initIcon(pathImg, plateau);
+		initIcon(pathImg, niveau, plateau, type);
 	}
 	
-	public void initIcon(ArrayList<ObstacleIcon> pathImg, Plateau plateau) {
+	public void initIcon(ArrayList<ObstacleIcon> pathImg, Niveau niveau, Plateau plateau, String type) {
 		int i = 1;
 		for (ObstacleIcon obsIcon : pathImg) {
 			Pane pane = createIcon(obsIcon);
@@ -80,19 +80,24 @@ public class SideButtons {
     	gridPaneSide.add(pane, 0, i+2);
     	
     	TextField levelName = new TextField();
-    	levelName.setPrefWidth(30);
-    	gridPaneSide.add(levelName, 0, i+4);
+    	if (type.equals("create")) {
+	    	levelName.setPrefWidth(30);
+	    	gridPaneSide.add(levelName, 0, i+4);
+    	}
     	
     	Button save = new Button();
     	save.setOnMouseClicked((event)->{
-    		System.out.println("CLICK");
-    		System.out.println(plateau.getCaseDepart());
     		ByteArrayOutputStream out = new ByteArrayOutputStream();
     		try {
     	    	ObjectOutputStream os = new ObjectOutputStream(out);
 				os.writeObject(plateau);
-				Niveau niveau = new Niveau(levelName.getText(), "Hugo", new Date(), new Date(), out.toByteArray());
-				ORM.saveNiveau(niveau);
+				if (type.equals("update")) {
+					ORM.updateNiveau(niveau.getNom(), out.toByteArray());
+					ORM.listNiveaux();
+				}else {
+					Niveau newNiveau = new Niveau(levelName.getText(), "Hugo", new Date(), new Date(), out.toByteArray());
+					ORM.saveNiveau(newNiveau);
+				}
 				new Menu(primaryStage);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

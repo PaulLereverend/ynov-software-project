@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import entities.Niveau;
 import entities.Obstacles;
 
 import javafx.event.EventHandler;
@@ -43,9 +44,19 @@ public class AffichagePlateau {
 	
 	boolean isClear = false;
 	
-	public AffichagePlateau(Stage primaryStage, boolean isEditView) {
+	public AffichagePlateau(Stage primaryStage, String type) {
+		super();
+		configPlateau(primaryStage, type, null);
+		
+	}
+	
+	public AffichagePlateau(Stage primaryStage, String type, Niveau niveau) {
 		super();
 		
+		configPlateau(primaryStage, type, niveau);
+	}
+	
+	private void configPlateau(Stage primaryStage, String type, Niveau niveau) {
 		HBox root = new HBox();
 	    root.setPadding(new Insets(20, 20, 20, 20));
 		
@@ -54,62 +65,19 @@ public class AffichagePlateau {
 		gridPaneSide.setAlignment(Pos.CENTER);
 		gridPane.setGridLinesVisible(true);
 		
-		//lignes
-		for (int i = 0; i < plateau.getNbCases(); i++) { 
-			RowConstraints row = new RowConstraints(30);
-			gridPane.getRowConstraints().add(row);
-			gridPaneSide.getRowConstraints().add(row);
-		}
-		
-		//colonnes
-		for (int j = 0; j < plateau.getNbCases(); j++) { 
-			ColumnConstraints col = new ColumnConstraints(30); 
-			gridPane.getColumnConstraints().add(col);  
-		}
-		
-		for (Case[] cases : plateau.casesTab) {
-			for (Case c : cases) {
-				initPlateau(c);
+		if (niveau != null) {
+			ByteArrayInputStream in = new ByteArrayInputStream(niveau.getComposition());
+		    ObjectInputStream is;
+			try {
+				is = new ObjectInputStream(in);
+				this.plateau = (Plateau) is.readObject();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 		
-		//setDefaultObstable(2, 2, new ObstacleIcon(new Image("file:src/main/resources/drapeau.png"), Obstacles.DEPART));
-		//setDefaultObstable(16, 16, new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE));
-		//plateau.setCaseDepart(2, 2);
-		//plateau.setCaseArrivee(16, 16);
-		/*
-		 * Création du menu des icones obstacles 
-		 */
-		SideButtons sb = new SideButtons(this, primaryStage, gridPaneSide);
-		if (isEditView) {
-			sb.displayEditView(this.plateau);
-		}else {
-			sb.displayExecView();
-		}
-		
-		root.getChildren().addAll(gridPane, gridPaneSide);
-		
-		Scene scene = new Scene(root);
-
-		primaryStage.setScene(scene);
-	}
-	
-	public AffichagePlateau(Stage primaryStage, boolean isEditView, byte[] plateauByte) {
-		super();
-		
-		ByteArrayInputStream in = new ByteArrayInputStream(plateauByte);
-	    ObjectInputStream is;
-		try {
-			is = new ObjectInputStream(in);
-			this.plateau = (Plateau) is.readObject();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		//lignes
 		for (int i = 0; i < plateau.getNbCases(); i++) { 
 			RowConstraints row = new RowConstraints(30);
@@ -125,8 +93,9 @@ public class AffichagePlateau {
 		
 		for (Case[] cases : plateau.casesTab) {
 			for (Case c : cases) {
-				Image img = null;
-				if (c.getObstacle() != null) {
+				initPlateau(c, type);
+				if (niveau != null && c.getObstacle() != null) {
+					Image img = null;
 					if (c.getObstacle().getType() == Obstacles.BOUE) {
 						img = new Image("file:src/main/resources/boue.png");
 					}else if (c.getObstacle().getType() == Obstacles.MUR) {
@@ -142,17 +111,16 @@ public class AffichagePlateau {
 			}
 		}
 		
-		HBox root = new HBox();
-	    root.setPadding(new Insets(20, 20, 20, 20));
-		
-		gridPane.setPadding(new Insets(20,20,20,20));
-		gridPane.setAlignment(Pos.CENTER);
-		gridPaneSide.setAlignment(Pos.CENTER);
-		gridPane.setGridLinesVisible(true);
-		
+		//setDefaultObstable(2, 2, new ObstacleIcon(new Image("file:src/main/resources/drapeau.png"), Obstacles.DEPART));
+		//setDefaultObstable(16, 16, new ObstacleIcon(new Image("file:src/main/resources/croix.png"), Obstacles.ARRIVEE));
+		//plateau.setCaseDepart(2, 2);
+		//plateau.setCaseArrivee(16, 16);
+		/*
+		 * Création du menu des icones obstacles 
+		 */
 		SideButtons sb = new SideButtons(this, primaryStage, gridPaneSide);
-		if (isEditView) {
-			sb.displayEditView(this.plateau);
+		if (type.equals("create") || type.equals("update")) {
+			sb.displayEditView(niveau, plateau, type);
 		}else {
 			sb.displayExecView();
 		}
@@ -176,57 +144,71 @@ public class AffichagePlateau {
 		    	image_view.setFitWidth(30);
 		    	image_view.setFitHeight(30);
 		    	image_view.setUserData(obstacleIcon.getTypeObstacle());
-			    if (obstacleIcon.getTypeObstacle() == Obstacles.ARRIVEE) {
+		    	if (obstacleIcon.getTypeObstacle() == Obstacles.BOUE)
+		    	{
+			    	plateau.setCaseBoue(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), false);
+				}
+		    	else if(obstacleIcon.getTypeObstacle() == Obstacles.MUR) 
+		    	{
+					plateau.setCaseMur(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), false);
+				}
+		    	else if (obstacleIcon.getTypeObstacle() == Obstacles.ARRIVEE) 
+		    	{
+			    	plateau.setCaseArrivee(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), false);
 					endExist = true;
-				}else if(obstacleIcon.getTypeObstacle() == Obstacles.DEPART) {
+				}
+		    	else if(obstacleIcon.getTypeObstacle() == Obstacles.DEPART) 
+		    	{
+					plateau.setCaseDepart(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), false);
 					startExist = true;
 				}
 			    p.getChildren().clear();
 			    p.getChildren().add(image_view);
-			    
 			}
 		}
 	}
 	
-	private void initPlateau(Case c) {
+	private void initPlateau(Case c, String type) {
 		
 		final int colIndex = c.getColonne();
 		final int rowIndex = c.getLigne();
 		
 		final Pane pane = new Pane();
         
-        //au survole de la souris on coloris la case
-        pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
-        	public void handle(MouseEvent t) {
-            	pane.setStyle("-fx-background-color:#dae7f3;");
-            }
-        	
-        });
-        
-        //quand la case n'est plus survolée, on rend la case transparente
-    	pane.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-            	pane.setStyle("-fx-background-color:transparent;");
-            }
-        });
-    	
-    	pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-            	//System.out.println(GridPane.getRowIndex(pane)+","+GridPane.getColumnIndex(pane));
-            	setObstacleInPane(pane);
-            }
-        });
-    	
-    	pane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent t) {
-            	if (putObstacle) {
-					putObstacle = false;
-				}else {
-					putObstacle = true;
-					setObstacleInPane(pane);
-				}
-            }
-        });
+		if (type.equals("create") || type.equals("update")) {
+	        //au survole de la souris on coloris la case
+	        pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+	        	public void handle(MouseEvent t) {
+	            	pane.setStyle("-fx-background-color:#dae7f3;");
+	            }
+	        	
+	        });
+	        
+	        //quand la case n'est plus survolée, on rend la case transparente
+	    	pane.setOnMouseExited(new EventHandler<MouseEvent>() {
+	            public void handle(MouseEvent t) {
+	            	pane.setStyle("-fx-background-color:transparent;");
+	            }
+	        });
+	    	
+	    	pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+	            public void handle(MouseEvent t) {
+	            	//System.out.println(GridPane.getRowIndex(pane)+","+GridPane.getColumnIndex(pane));
+	            	setObstacleInPane(pane);
+	            }
+	        });
+	    	
+	    	pane.setOnMousePressed(new EventHandler<MouseEvent>() {
+	            public void handle(MouseEvent t) {
+	            	if (putObstacle) {
+						putObstacle = false;
+					}else {
+						putObstacle = true;
+						setObstacleInPane(pane);
+					}
+	            }
+	        });
+		}
     	
     	gridPane.add(pane, colIndex, rowIndex);
     }
@@ -265,11 +247,11 @@ public class AffichagePlateau {
     		{
     			if (pane.getChildren().get(0).getUserData() != null) 
     			{
-    				if (obstIconSelected.getTypeObstacle() == Obstacles.BOUE) 
+    				if (pane.getChildren().get(0).getUserData().equals(Obstacles.BOUE)) 
     				{
     			    	plateau.setCaseBoue(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), true);
     				}
-    				else if(obstIconSelected.getTypeObstacle() == Obstacles.MUR) 
+    				else if(pane.getChildren().get(0).getUserData().equals(Obstacles.MUR)) 
     				{
     					plateau.setCaseMur(GridPane.getRowIndex(pane), GridPane.getColumnIndex(pane), true);
     				}

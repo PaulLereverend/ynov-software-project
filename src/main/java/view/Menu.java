@@ -29,17 +29,17 @@ public class Menu {
         	if (i == 0) {
         		bouton.setText("Jouer");
         		bouton.setOnMouseClicked((event)->{
-        			new ChoisirNiveau(primaryStage, false);
+        			new ChoisirNiveau(primaryStage, "read");
         		});
 			}else if(i == 1) {
 				bouton.setText("Modifier un niveau");
 				bouton.setOnMouseClicked((event)->{
-        			new ChoisirNiveau(primaryStage, true);
+        			new ChoisirNiveau(primaryStage, "update");
         		});
 			}else {
 				bouton.setText("Créer un niveau");
 				bouton.setOnMouseClicked((event)->{
-        			new AffichagePlateau(primaryStage, true);
+        			new AffichagePlateau(primaryStage, "create");
         		});
 			}
 			gridPane.add(bouton, 0, i);
