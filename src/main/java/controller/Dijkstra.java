@@ -3,6 +3,7 @@ package controller;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import entities.Effets;
 import entities.Obstacles;
 import model.Case;
 import model.Plateau;
@@ -11,18 +12,17 @@ import view.AffichagePlateau;
 
 public class Dijkstra implements Algorithme{
 	private boolean termine = false;
-	private Plateau grille;
 	private AffichagePlateau view;
-	
+	private Plateau grille;
 	
 	/**
 	 * Constructeur de l'IA Dijkstra
 	 * @param grille
 	 * @param view
 	 */
-	public Dijkstra(Plateau grille, AffichagePlateau view) {
+	public Dijkstra(AffichagePlateau view) {
 		super();
-		this.grille = grille;
+		this.grille = view.getPlateau();
 		this.view = view;
 	}
 	/**
@@ -30,7 +30,8 @@ public class Dijkstra implements Algorithme{
 	 */
 	public void start() {
 		ArrayList<Case> priority = new ArrayList<Case>();
-		priority.add(this.grille.getCaseDepart());	
+		priority.add(this.grille.getCaseDepart());
+		System.out.println(this.grille.getCase(3, 14).getObstacle());
 		ArrayList<Case> parcourues = new ArrayList<Case>();
 		while(!termine) {
 			if(priority.size() <= 0) {	
@@ -69,7 +70,7 @@ public class Dijkstra implements Algorithme{
 		ArrayList<Case> explored = new ArrayList<Case>();
 		ArrayList<Case> voisins = this.grille.getCasesArround(c);
 		for (Case caz : voisins) {
-			if(!caz.isExplored() && this.termine == false) {
+			if(!caz.isExplored() && this.termine == false && (caz.getObstacle() == null || caz.getObstacle().getEffet() == Effets.PASSANT)) {
 				this.explorer(caz, c, distance);
 				caz.setExplored(true);
 				explored.add(caz);

@@ -3,6 +3,7 @@ package controller;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import entities.Effets;
 import entities.Obstacles;
 import model.Case;
 import model.Plateau;
@@ -87,7 +88,7 @@ public class AStar implements Algorithme{
 		ArrayList<Case> explored = new ArrayList<Case>();
 		ArrayList<Case> voisins = this.grille.getCasesArround(c);
 		for (Case caz : voisins) {
-			if(!caz.isExplored() && this.termine == false) {
+			if(!caz.isExplored() && this.termine == false && (caz.getObstacle() == null || caz.getObstacle().getEffet() == Effets.PASSANT)) {
 				this.explorer(caz, c, distance);
 				caz.setExplored(true);
 				explored.add(caz);
