@@ -123,7 +123,7 @@ public class AffichagePlateau {
 		if (type.equals("create") || type.equals("update")) {
 			sb.displayEditView(this.niveau, plateau, type);
 		}else {
-			sb.displayExecView();
+			sb.displayExecView(this.niveau);
 		}
 		
 		root.getChildren().addAll(gridPane, gridPaneSide);

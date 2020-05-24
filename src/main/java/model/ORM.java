@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -138,6 +139,32 @@ public class ORM {
     	session.getTransaction().rollback();
     }
   }
+  
+  public static List<Historique> listHistoAstar(Niveau niveau) {
+	  try {
+		  session.getTransaction().begin();
+		  List<Historique> listHistoAstar = session.createQuery("from Historique where niveau = "+niveau.getId()+" and algorithme = 'A*'").list();
+		  session.getTransaction().commit();
+		  return listHistoAstar;
+	  } catch (Exception e) {
+		  System.out.println(e.getMessage());
+		  session.getTransaction().rollback();
+	  }
+	  return null;
+  }
+  
+  public static List<Historique> listHistoDijkstra(Niveau niveau) {
+	  try {
+		  session.getTransaction().begin();
+		  List<Historique> listHistoDijk = session.createQuery("from Historique where niveau = "+niveau.getId()+" and algorithme = 'Dijkstra'").list();
+	      session.getTransaction().commit();
+	      return listHistoDijk;
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	    	session.getTransaction().rollback();
+	    }
+	    return null;
+	  }
 
   /*public void deleteStudent(Long studentId) {
     try {

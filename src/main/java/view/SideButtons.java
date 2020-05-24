@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import controller.AStar;
 import controller.Dijkstra;
+import entities.Historique;
 import entities.Niveau;
 import entities.Obstacles;
 import javafx.event.EventHandler;
@@ -19,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.ORM;
 import model.ObstacleIcon;
@@ -103,7 +106,6 @@ public class SideButtons {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		//ORM.saveObstacle(new Obstacle(Effets.BLOQUANT, "mur", null, 0, 0, Obstacles.MUR));
 		});
     	save.setStyle("-fx-background-color:lightgreen;");
     	save.setText("Sauvegarder");
@@ -144,21 +146,19 @@ public class SideButtons {
     	return pane;
 	}
 	
-	public void displayExecView() {
+	public void displayExecView(Niveau niveau) {
 		int i = 2;
 		Button astar = new Button();
 		astar.setText("A Star");
-    	gridPaneSide.add(astar, 0, i);
     	astar.setOnMouseClicked((event)->{
-    		System.out.println("Lancement A*");
     		AStar a = new AStar(this.affichagePlateau.getPlateau(), this.affichagePlateau);
     		a.start();
     		// lance astar
 		});
+    	gridPaneSide.add(astar, 0, i);
     	
     	Button dijkstra = new Button();
     	dijkstra.setOnMouseClicked((event)->{
-    		System.out.println("Lancement dijkstra");
     		Dijkstra dij = new Dijkstra(this.affichagePlateau);
     		dij.start();
     		//lance dijkstra
@@ -172,6 +172,20 @@ public class SideButtons {
 		});
     	retour.setText("Retour");
     	gridPaneSide.add(retour, 0, i+4);
+    	
+    	List<Historique> histoDijsk = ORM.listHistoDijkstra(niveau);
+    	if (histoDijsk != null && histoDijsk.size() > 0) {
+	    	Text dikstraHisto1 = new Text();
+	    	dikstraHisto1.setText("Dijkstra : "+histoDijsk.get(0).getResultat()+" ms");
+	    	gridPaneSide.add(dikstraHisto1, 0, i+6);
+		}
+		
+		List<Historique> histoAstar = ORM.listHistoAstar(niveau);
+		if (histoAstar != null && histoAstar.size() > 0) {
+			Text astarHisto1 = new Text();
+	    	astarHisto1.setText("A* : "+histoAstar.get(0).getResultat()+" ms");
+	    	gridPaneSide.add(astarHisto1, 0, i+7);
+		}
 		
 	}
 
