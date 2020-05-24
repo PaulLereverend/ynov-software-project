@@ -25,6 +25,9 @@ public class Historique {
 	@Column(name = "date")
 	private Date date;
 	
+	@Column(name = "algorithme")
+	private String algorithme;
+	
 	@Column(name = "resultat")
 	private double resultat;
 
