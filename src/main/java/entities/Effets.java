@@ -1,8 +1,8 @@
 package entities;
 
 public enum Effets {
-	  BLOQUANT ("depart"),
-	  PASSANT ("arrivee"),
+	  BLOQUANT ("bloquant"),
+	  PASSANT ("passant"),
 	  RALENTIS ("ralentis");
 	  private String name = "";
 	   
