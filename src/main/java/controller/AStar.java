@@ -2,10 +2,13 @@ package controller;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Date;
 
 import entities.Effets;
+import entities.Historique;
 import entities.Obstacles;
 import model.Case;
+import model.ORM;
 import model.Plateau;
 import view.AffichagePlateau;
 
@@ -51,6 +54,7 @@ public class AStar implements Algorithme{
 			trier(priority);
 		}
 		this.afficherCouleurs(parcourues);
+		this.calculerScore(parcourues);
 		
 	}
 	private void afficherCouleurs(ArrayList<Case> parcourues) {
@@ -59,6 +63,7 @@ public class AStar implements Algorithme{
 		}
 	}
 	public int calculerScore(ArrayList<Case> parcourues) {
+		ORM.saveHistorique(new Historique(this.view.getNiveau(), new Date(), "A*", parcourues.size()));
 		return parcourues.size();
 	}
 	public ArrayList<Case> trier(ArrayList<Case> sort) {

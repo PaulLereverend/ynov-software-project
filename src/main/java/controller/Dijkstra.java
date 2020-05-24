@@ -2,10 +2,13 @@ package controller;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Date;
 
 import entities.Effets;
+import entities.Historique;
 import entities.Obstacles;
 import model.Case;
+import model.ORM;
 import model.Plateau;
 import view.AffichagePlateau;
 
@@ -50,6 +53,7 @@ public class Dijkstra implements Algorithme{
 			}
 		}
 		this.afficherCouleurs(parcourues);
+		this.calculerScore(parcourues);
 		
 	}
 	private void afficherCouleurs(ArrayList<Case> parcourues) {
@@ -58,6 +62,7 @@ public class Dijkstra implements Algorithme{
 		}
 	}
 	public int calculerScore(ArrayList<Case> parcourues) {
+		ORM.saveHistorique(new Historique(this.view.getNiveau(), new Date(), "Dijkstra", parcourues.size()));
 		return parcourues.size();
 	}
 	/**
