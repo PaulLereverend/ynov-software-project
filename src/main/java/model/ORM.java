@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import entities.Effets;
+import entities.Historique;
 import entities.Niveau;
 import entities.Obstacle;
 import entities.Obstacles;
@@ -65,7 +66,30 @@ public class ORM {
 	    }
 	    return niveau;
 	  }
+ 
+  public static Historique saveHistorique(Historique historique) {
+	    try {
+	      session.getTransaction().begin();
+	      session.persist(historique);
+	      session.getTransaction().commit();
+	    } catch (Exception e) {
+	      session.getTransaction().rollback();
+	    }
+	    return historique;
+	  }
 
+  public static List<Niveau> getNiveaux() {
+	    try {
+	      session.getTransaction().begin();
+	      List<Niveau> niveaux = session.createQuery("from Niveau").list();
+	      session.getTransaction().commit();
+	      return niveaux;
+	    }catch (Exception e) {
+	    	e.printStackTrace();
+	      session.getTransaction().rollback();
+	    }
+		return null;
+	  }
   public static void listObstacles() {
     try {
       session.getTransaction().begin();
