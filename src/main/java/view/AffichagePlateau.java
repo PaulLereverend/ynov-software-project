@@ -43,20 +43,21 @@ public class AffichagePlateau {
 	boolean endExist = false;
 	
 	boolean isClear = false;
+	Niveau niveau = new Niveau();
 	
 	public AffichagePlateau(Stage primaryStage, String type) {
 		super();
-		configPlateau(primaryStage, type, null);
+		configPlateau(primaryStage, type);
 		
 	}
 	
 	public AffichagePlateau(Stage primaryStage, String type, Niveau niveau) {
 		super();
-		
-		configPlateau(primaryStage, type, niveau);
+		this.niveau = niveau;
+		configPlateau(primaryStage, type);
 	}
 	
-	private void configPlateau(Stage primaryStage, String type, Niveau niveau) {
+	private void configPlateau(Stage primaryStage, String type) {
 		HBox root = new HBox();
 	    root.setPadding(new Insets(20, 20, 20, 20));
 		
@@ -65,8 +66,8 @@ public class AffichagePlateau {
 		gridPaneSide.setAlignment(Pos.CENTER);
 		gridPane.setGridLinesVisible(true);
 		
-		if (niveau != null) {
-			ByteArrayInputStream in = new ByteArrayInputStream(niveau.getComposition());
+		if (this.niveau != null) {
+			ByteArrayInputStream in = new ByteArrayInputStream(this.niveau.getComposition());
 		    ObjectInputStream is;
 			try {
 				is = new ObjectInputStream(in);
@@ -94,7 +95,7 @@ public class AffichagePlateau {
 		for (Case[] cases : plateau.casesTab) {
 			for (Case c : cases) {
 				initPlateau(c, type);
-				if (niveau != null && c.getObstacle() != null) {
+				if (this.niveau != null && c.getObstacle() != null) {
 					Image img = null;
 					if (c.getObstacle().getType() == Obstacles.BOUE) {
 						img = new Image("file:src/main/resources/boue.png");
@@ -120,7 +121,7 @@ public class AffichagePlateau {
 		 */
 		SideButtons sb = new SideButtons(this, primaryStage, gridPaneSide);
 		if (type.equals("create") || type.equals("update")) {
-			sb.displayEditView(niveau, plateau, type);
+			sb.displayEditView(this.niveau, plateau, type);
 		}else {
 			sb.displayExecView();
 		}
@@ -298,6 +299,10 @@ public class AffichagePlateau {
 	
 	public Plateau getPlateau() {
 		return plateau;
+	}
+	
+	public Niveau getNiveau() {
+		return this.niveau;
 	}
 
 
