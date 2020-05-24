@@ -11,10 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import model.Plateau;
 
 @Entity
+@Table(name="Niveau")
 public class Niveau {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +45,9 @@ public class Niveau {
 	@OneToMany(mappedBy = "niveau", cascade = CascadeType.ALL)
     private Set<Historique> historique;
 
+	public Niveau() {
+		
+	}
 	public Niveau(String nom, String createur, Date dateDeCreation, Date dateDeModification, byte[] composition) {
 		this.nom = nom;
 		this.createur = createur;

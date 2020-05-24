@@ -6,9 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name="Obstacle")
 public class Obstacle implements Serializable{
 	
 	/**
@@ -37,6 +39,10 @@ public class Obstacle implements Serializable{
 	private int nbMinParNiveau;
 	
 	private Obstacles type;
+	
+	public Obstacle() {
+		
+	}
 
 	public Obstacle(Effets effet, String nom, byte[] apparence, int nbMaxParNiveau, int nbMinParNiveau, Obstacles type) {
 		super();
