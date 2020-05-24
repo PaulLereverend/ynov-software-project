@@ -32,21 +32,12 @@ public class Historique {
 	private double resultat;
 
 	
-	public Historique(int id, Niveau niveau, Date date, String algorithme, double resultat) {
+	public Historique(Niveau niveau, Date date, String algorithme, double resultat) {
 		super();
-		this.id = id;
 		this.niveau = niveau;
 		this.date = date;
 		this.algorithme = algorithme;
 		this.resultat = resultat;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Niveau getNiveau() {
