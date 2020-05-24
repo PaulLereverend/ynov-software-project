@@ -141,4 +141,12 @@ public class Plateau implements Serializable{
 		}
 		return null;
 	}
+	
+	public void resetCases() {
+		for (Case[] cases : casesTab) {
+			for (Case c : cases) {
+				c.setExplored(false);
+			}
+		}
+	}
 }

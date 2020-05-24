@@ -34,7 +34,6 @@ public class Dijkstra implements Algorithme{
 	public void start() {
 		ArrayList<Case> priority = new ArrayList<Case>();
 		priority.add(this.grille.getCaseDepart());
-		System.out.println(this.grille.getCase(3, 14).getObstacle());
 		ArrayList<Case> parcourues = new ArrayList<Case>();
 		while(!termine) {
 			if(priority.size() <= 0) {	

@@ -291,8 +291,20 @@ public class AffichagePlateau {
 		for (Node node : gridPane.getChildren()) {
 			if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
 				if (GridPane.getColumnIndex(node) == c.getColonne() && GridPane.getRowIndex(node) == c.getLigne()) {
-		            node.setStyle("-fx-background-color:#"+Integer.toHexString(couleur.getRGB()).substring(2)+";");
+					if (couleur != null) {
+						node.setStyle("-fx-background-color:#"+Integer.toHexString(couleur.getRGB()).substring(2)+";");
+					}else {
+						node.setStyle(null);
+					}
 		        }
+			}
+	    }
+	}
+	
+	public void clearPlateau() {
+		for (Node node : gridPane.getChildren()) {
+			if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
+				this.colorierCase(new Case(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), null), null);
 			}
 	    }
 	}

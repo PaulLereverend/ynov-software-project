@@ -155,17 +155,21 @@ public class SideButtons {
 		Button astar = new Button();
 		astar.setText("A Star");
     	astar.setOnMouseClicked((event)->{
+    		this.affichagePlateau.clearPlateau();
     		AStar a = new AStar(this.affichagePlateau.getPlateau(), this.affichagePlateau);
     		a.start(); // lance astar
     		updateHisto(niveau, dikstraHisto, astarHisto);
+    		this.affichagePlateau.getPlateau().resetCases();
 		});
     	gridPaneSide.add(astar, 0, i);
     	
     	Button dijkstra = new Button();
     	dijkstra.setOnMouseClicked((event)->{
+    		this.affichagePlateau.clearPlateau();
     		Dijkstra dij = new Dijkstra(this.affichagePlateau);
     		dij.start(); //lance dijkstra
     		updateHisto(niveau, dikstraHisto, astarHisto);
+    		this.affichagePlateau.getPlateau().resetCases();
 		});
     	dijkstra.setText("Dijkstra");
     	gridPaneSide.add(dijkstra, 0, i+2);
@@ -184,7 +188,7 @@ public class SideButtons {
 		
 	}
 	
-	public void updateHisto(Niveau niveau, Text dikstraHisto, Text astarHisto) {
+	private void updateHisto(Niveau niveau, Text dikstraHisto, Text astarHisto) {
 		//astarHisto.setText("A* : no data");
 		//dikstraHisto.setText("Dijkstra : no data");
 		List<Historique> histoDijsk = ORM.listHistoDijkstra(niveau);
