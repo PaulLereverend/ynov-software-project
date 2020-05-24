@@ -159,7 +159,7 @@ public class SideButtons {
     	Button dijkstra = new Button();
     	dijkstra.setOnMouseClicked((event)->{
     		System.out.println("Lancement dijkstra");
-    		Dijkstra dij = new Dijkstra(this.affichagePlateau.getPlateau(), this.affichagePlateau);
+    		Dijkstra dij = new Dijkstra(this.affichagePlateau);
     		dij.start();
     		//lance dijkstra
 		});
