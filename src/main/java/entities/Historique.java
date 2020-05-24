@@ -39,6 +39,10 @@ public class Historique {
 		this.algorithme = algorithme;
 		this.resultat = resultat;
 	}
+	
+	public Historique() {
+		
+	}
 
 	public Niveau getNiveau() {
 		return niveau;

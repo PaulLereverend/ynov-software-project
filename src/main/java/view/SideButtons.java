@@ -34,6 +34,10 @@ public class SideButtons {
 	private AffichagePlateau affichagePlateau;
 	
 	private Stage primaryStage;
+	
+	Text dikstraHisto = new Text();
+	
+	Text astarHisto = new Text();
 
 	public SideButtons(AffichagePlateau affichagePlateau, Stage primaryStage, GridPane gridPaneSide) {
 		this.gridPaneSide = gridPaneSide;
@@ -152,16 +156,16 @@ public class SideButtons {
 		astar.setText("A Star");
     	astar.setOnMouseClicked((event)->{
     		AStar a = new AStar(this.affichagePlateau.getPlateau(), this.affichagePlateau);
-    		a.start();
-    		// lance astar
+    		a.start(); // lance astar
+    		updateHisto(niveau, dikstraHisto, astarHisto);
 		});
     	gridPaneSide.add(astar, 0, i);
     	
     	Button dijkstra = new Button();
     	dijkstra.setOnMouseClicked((event)->{
     		Dijkstra dij = new Dijkstra(this.affichagePlateau);
-    		dij.start();
-    		//lance dijkstra
+    		dij.start(); //lance dijkstra
+    		updateHisto(niveau, dikstraHisto, astarHisto);
 		});
     	dijkstra.setText("Dijkstra");
     	gridPaneSide.add(dijkstra, 0, i+2);
@@ -173,20 +177,25 @@ public class SideButtons {
     	retour.setText("Retour");
     	gridPaneSide.add(retour, 0, i+4);
     	
-    	List<Historique> histoDijsk = ORM.listHistoDijkstra(niveau);
+    	gridPaneSide.add(dikstraHisto, 0, i+6);
+    	gridPaneSide.add(astarHisto, 0, i+7);
+    	
+    	updateHisto(niveau, dikstraHisto, astarHisto);
+		
+	}
+	
+	public void updateHisto(Niveau niveau, Text dikstraHisto, Text astarHisto) {
+		//astarHisto.setText("A* : no data");
+		//dikstraHisto.setText("Dijkstra : no data");
+		List<Historique> histoDijsk = ORM.listHistoDijkstra(niveau);
     	if (histoDijsk != null && histoDijsk.size() > 0) {
-	    	Text dikstraHisto1 = new Text();
-	    	dikstraHisto1.setText("Dijkstra : "+histoDijsk.get(0).getResultat()+" ms");
-	    	gridPaneSide.add(dikstraHisto1, 0, i+6);
+    		dikstraHisto.setText("Dijkstra : "+histoDijsk.get(histoDijsk.size()-1).getResultat()+" ms");
 		}
 		
 		List<Historique> histoAstar = ORM.listHistoAstar(niveau);
 		if (histoAstar != null && histoAstar.size() > 0) {
-			Text astarHisto1 = new Text();
-	    	astarHisto1.setText("A* : "+histoAstar.get(0).getResultat()+" ms");
-	    	gridPaneSide.add(astarHisto1, 0, i+7);
+			astarHisto.setText("A* : "+histoAstar.get(histoAstar.size()-1).getResultat()+" ms");
 		}
-		
 	}
 
 }

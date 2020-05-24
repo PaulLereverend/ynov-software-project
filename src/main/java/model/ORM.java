@@ -95,10 +95,6 @@ public class ORM {
     try {
       session.getTransaction().begin();
       List<Obstacle> obstacles = session.createQuery("from Obstacle").list();
-      System.out.println(obstacles.size());
-      for (Obstacle obstacle : obstacles) {
-          System.out.println("coucou : " + obstacle.getNom());
-      } 
       session.getTransaction().commit();
     }catch (Exception e) {
     	e.printStackTrace();
@@ -110,13 +106,13 @@ public class ORM {
 	  try {
 		  session.getTransaction().begin();
 		  List<Niveau> niveaux = session.createQuery("from Niveau").list();
-		  if (niveaux.size() == 0) {
+		  /*if (niveaux.size() == 0) {
 			  System.out.println("Pas de niveau enregistré");
 		  }else {
 			  for (Niveau niveau : niveaux) {
 		          System.out.println(niveau.getNom());
 		      }
-		  }
+		  }*/
 		  session.getTransaction().commit();
 		  return niveaux;
 	}catch (Exception e) {
@@ -129,7 +125,6 @@ public class ORM {
   public static void updateNiveau(String nomNiveau, byte[] composition) {
     try {
       session.getTransaction().begin();
-      System.out.println(nomNiveau);
       List<Niveau> listNiveau = session.createQuery("from Niveau where nom = '"+nomNiveau+"'").list();
       Niveau niveau = listNiveau.get(0);
       niveau.setComposition(composition);

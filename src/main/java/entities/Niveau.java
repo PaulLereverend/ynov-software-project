@@ -48,6 +48,7 @@ public class Niveau {
 	public Niveau() {
 		
 	}
+	
 	public Niveau(String nom, String createur, Date dateDeCreation, Date dateDeModification, byte[] composition) {
 		this.nom = nom;
 		this.createur = createur;
