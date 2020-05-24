@@ -31,4 +31,55 @@ public class Historique {
 	@Column(name = "resultat")
 	private double resultat;
 
+	
+	public Historique(int id, Niveau niveau, Date date, String algorithme, double resultat) {
+		super();
+		this.id = id;
+		this.niveau = niveau;
+		this.date = date;
+		this.algorithme = algorithme;
+		this.resultat = resultat;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Niveau getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Niveau niveau) {
+		this.niveau = niveau;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getAlgorithme() {
+		return algorithme;
+	}
+
+	public void setAlgorithme(String algorithme) {
+		this.algorithme = algorithme;
+	}
+
+	public double getResultat() {
+		return resultat;
+	}
+
+	public void setResultat(double resultat) {
+		this.resultat = resultat;
+	}
+	
+
 }
