@@ -66,7 +66,7 @@ public class AffichagePlateau {
 		gridPaneSide.setAlignment(Pos.CENTER);
 		gridPane.setGridLinesVisible(true);
 		
-		if (this.niveau != null) {
+		if (this.niveau.getComposition() != null) {
 			ByteArrayInputStream in = new ByteArrayInputStream(this.niveau.getComposition());
 		    ObjectInputStream is;
 			try {
