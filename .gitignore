@@ -27,3 +27,5 @@ hs_err_pid*
 target/
 
 labyrinthe.mv.db
+
+.DS_Store
