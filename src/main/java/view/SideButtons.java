@@ -193,12 +193,12 @@ public class SideButtons {
 		//dikstraHisto.setText("Dijkstra : no data");
 		List<Historique> histoDijsk = ORM.listHistoDijkstra(niveau);
     	if (histoDijsk != null && histoDijsk.size() > 0) {
-    		dikstraHisto.setText("Dijkstra : "+histoDijsk.get(histoDijsk.size()-1).getResultat()+" ms");
+    		dikstraHisto.setText("Dijkstra : "+histoDijsk.get(histoDijsk.size()-1).getResultat());
 		}
 		
 		List<Historique> histoAstar = ORM.listHistoAstar(niveau);
 		if (histoAstar != null && histoAstar.size() > 0) {
-			astarHisto.setText("A* : "+histoAstar.get(histoAstar.size()-1).getResultat()+" ms");
+			astarHisto.setText("A* : "+histoAstar.get(histoAstar.size()-1).getResultat());
 		}
 	}
 
